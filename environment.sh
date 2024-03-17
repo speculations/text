@@ -6,7 +6,7 @@ requirements.txt file to create an environment.
 comment
 
 # The environment in focus
-prefix=/mnt/j/programs/anaconda3/envs/transcribe
+prefix=/opt/miniconda3/envs/transcribe
 
 : << 'delete'
   Delete the existing <transcribe> environment
