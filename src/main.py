@@ -29,7 +29,7 @@ def main() -> None:
 
     # Explorations
     source: datasets.Dataset = src.data.source.Source().exc()
-    src.modelling.interface.Interface().exc(source=source)
+    src.modelling.interface.Interface(source=source).exc()
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
