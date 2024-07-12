@@ -1,13 +1,12 @@
 """Module splittings.py"""
 import datasets
 
-import config
 import src.modelling.t5.preprocessing
 
 
 class Splittings:
     """
-    This class splits a datasets.Dataset into tokenized training & testing sets
+    This class splits a datasets.Dataset into T5 tokenized training & testing sets
     """
 
     def __init__(self, splits: datasets.DatasetDict):
