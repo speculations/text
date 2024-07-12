@@ -28,8 +28,7 @@ class Source:
         self.__logger.info('The data segments:\n%s', self.__dataset.keys())
 
         # The initial focus
-        self.__logger.info('Focusing on data segment <ca_test>\n')
         temporary: datasets.Dataset = self.__temporary()
-        self.__logger.info(temporary.__dir__())
+        self.__logger.info('Focusing on data segment <ca_test>\n%s', temporary.__dir__())
 
         return temporary
