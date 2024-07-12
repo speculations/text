@@ -1,4 +1,5 @@
 
+import datasets
 import transformers
 
 import src.elements.variable as vr
@@ -18,6 +19,9 @@ class Intelligence:
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint)
 
+        self.__data_collator = transformers.DataCollatorForSeq2Seq(
+            tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
+
         self.__args = transformers.Seq2SeqTrainingArguments(
             output_dir='bills',
             eval_strategy='epoch',
@@ -33,11 +37,15 @@ class Intelligence:
             push_to_hub=False
         )
 
-    def __call__(self):
+    def __call__(self, data: datasets.DatasetDict):
 
         transformers.Seq2SeqTrainer(
             model=self.__model,
-            args=self.__args
+            args=self.__args,
+            train_dataset=data['train'],
+            eval_dataset=data['test'],
+            tokenizer=self.__parameters.tokenizer,
+            data_collator=self.__data_collator
 
         )
 
