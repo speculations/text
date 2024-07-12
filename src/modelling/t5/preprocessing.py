@@ -23,17 +23,20 @@ class Preprocessing:
         self.__logger = logging.getLogger(__name__)
 
     def exc(self, blob: datasets.formatting.formatting.LazyBatch) -> transformers.BatchEncoding:
+        """
 
-        self.__logger.info(type(blob))
+        :param blob: training or testing data batch
+        :return:
+        """
 
         # Independent Variable
         inputs = [self.__prefix + segment for segment in blob['text']]
-        structure: transformers.BatchEncoding = self.__tokenizer(text=inputs, max_length=self.__max_length_input, truncation=True)
-        self.__logger.info(type(structure))
+        structure: transformers.BatchEncoding = self.__tokenizer(
+            text=inputs, max_length=self.__max_length_input, truncation=True)
 
-        # Dependent Variable
-        targets = self.__tokenizer(text_target=blob['summary'], max_length=self.__max_length_target, truncation=True)
+        # Dependent Variable; targets has a dictionary structure, wherein the keys are <input_ids> & <attention_mask>
+        targets: transformers.BatchEncoding = self.__tokenizer(
+            text_target=blob['summary'], max_length=self.__max_length_target, truncation=True)
         structure['labels']  = targets['input_ids']
-        self.__logger.info(type(structure))
 
         return structure
