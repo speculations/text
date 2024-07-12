@@ -4,6 +4,7 @@ import os
 import sys
 
 import torch
+import datasets
 
 
 def main() -> None:
@@ -27,7 +28,8 @@ def main() -> None:
         logger.info('Device: %s', device.upper())
 
     # Explorations
-    src.data.source.Source().exc()
+    source: datasets.Dataset = src.data.source.Source().exc()
+    src.modelling.interface.Interface().exc(source=source)
 
     # Delete Cache Points
     src.functions.cache.Cache().exc()
@@ -48,5 +50,6 @@ if __name__ == '__main__':
     # Modules
     import src.functions.cache
     import src.data.source
+    import src.modelling.interface
 
     main()
