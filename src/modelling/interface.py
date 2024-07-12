@@ -3,7 +3,9 @@ import logging
 
 import datasets
 
-import src.modelling.t5.splittings
+import config
+import src.modelling.t5.steps
+
 
 
 class Interface:
@@ -14,11 +16,15 @@ class Interface:
     def __init__(self, source: datasets.Dataset):
         """
 
-        :param source: A datasets.Dataset data piece
+        :param source: A datasets.Dataset data piece for modelling
         """
 
         self.__source = source
-        self.__splits: datasets.DatasetDict = src.modelling.t5.splittings.Splittings(source=source).__call__()
+
+        # Splitting
+        self.__configurations = config.Config()
+        self.__splits: datasets.DatasetDict = self.__source.train_test_split(
+            test_size=self.__configurations.test_fraction)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -32,4 +38,4 @@ class Interface:
         :return:
         """
 
-        self.__logger.info(self.__splits.keys())
+        src.modelling.t5.steps.Steps(splits=self.__splits).exc()
