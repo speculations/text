@@ -2,6 +2,7 @@ import logging
 import datasets
 
 import config
+import src.modelling.t5.preprocessing
 
 class Interface:
 
@@ -15,6 +16,9 @@ class Interface:
 
         # Configurations
         self.__configurations = config.Config()
+
+        # Instances
+        self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -47,3 +51,6 @@ class Interface:
         self.__logger.info('Text:\n%s', splits['train'][0]['text'])
         self.__logger.info('Title:\n%s', splits['train'][0]['title'])
         self.__logger.info('Summary:\n%s', splits['train'][0]['summary'])
+
+        cuts = splits.map(self.__preprocessing.exc, batched=True)
+        self.__logger.info(type(cuts))
