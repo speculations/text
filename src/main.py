@@ -26,6 +26,9 @@ def main() -> None:
     else:
         logger.info('Device: %s', device.upper())
 
+    # Explorations
+    src.data.source.Source().exc()
+
     # Delete Cache Points
     src.functions.cache.Cache().exc()
 
@@ -44,5 +47,6 @@ if __name__ == '__main__':
 
     # Modules
     import src.functions.cache
+    import src.data.source
 
     main()
