@@ -2,6 +2,8 @@ transformers
 accelerate>=0.31
 dask[complete]>=2023
 seqeval[gpu]
+datasets
+rouge_score
 evaluate
 pandas>=2.2
 numpy>=1.26
