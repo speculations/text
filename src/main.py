@@ -3,8 +3,8 @@ import logging
 import os
 import sys
 
-import torch
 import datasets
+import torch
 
 
 def main() -> None:
