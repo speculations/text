@@ -43,9 +43,12 @@ class Interface:
         :return:
         """
 
+        # Splitting the data into training & testing sets; each split is a datasets.arrow_dataset.Dataset, and
+        # each instance of a split has keys -> 'text', 'summary', 'title'
         splits: datasets.DatasetDict = self.__split()
         self.__logger.info(splits.keys())
         self.__logger.info(splits['train'][0].keys())
 
+        # Converting each split to a tokenized split
         cuts: datasets.DatasetDict = splits.map(self.__preprocessing.exc, batched=True)
         self.__logger.info(cuts.keys())
