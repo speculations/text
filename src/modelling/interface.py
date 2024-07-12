@@ -25,7 +25,6 @@ class Interface:
     def __split(self):
         """
 
-        :param splits:
         :return:
         """
 
@@ -39,7 +38,12 @@ class Interface:
         return splits
 
     def exc(self):
+        """
+
+        :return:
+        """
 
         splits = self.__split()
-        self.__logger.info(splits['train'][0])
-
+        self.__logger.info('Text:\n%s', splits['train'][0]['text'])
+        self.__logger.info('Title:\n%s', splits['train'][0]['title'])
+        self.__logger.info('Summary:\n%s', splits['train'][0]['summary'])
