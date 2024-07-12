@@ -27,5 +27,6 @@ class Steps:
         :return:
         """
 
+        # T5 tokenized training & testing splits
         self.__splits: datasets.DatasetDict = src.modelling.t5.splittings.Splittings(splits=self.__splits).__call__()
         self.__logger.info(self.__splits.keys())
