@@ -4,6 +4,7 @@ import transformers
 
 import src.elements.variable as vr
 import src.modelling.t5.parameters
+import src.modelling.t5.metrics
 
 class Intelligence:
 
@@ -14,14 +15,16 @@ class Intelligence:
 
         self.__variable = variable
 
+        # Instances
+        self.__metrics = src.modelling.t5.metrics.Metrics()
         self.__parameters = src.modelling.t5.parameters.Parameters()
 
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint)
-
         self.__data_collator = transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
+        # Arguments
         self.__args = transformers.Seq2SeqTrainingArguments(
             output_dir='bills',
             eval_strategy='epoch',
@@ -37,15 +40,18 @@ class Intelligence:
             push_to_hub=False
         )
 
-    def __call__(self, data: datasets.DatasetDict):
+    def __call__(self, data: datasets.DatasetDict) -> transformers.Trainer:
 
-        transformers.Seq2SeqTrainer(
+        trainer = transformers.Seq2SeqTrainer(
             model=self.__model,
             args=self.__args,
             train_dataset=data['train'],
             eval_dataset=data['test'],
             tokenizer=self.__parameters.tokenizer,
-            data_collator=self.__data_collator
-
+            data_collator=self.__data_collator,
+            compute_metrics=self.__metrics.exc
         )
 
+        trainer.train()
+
+        return trainer
