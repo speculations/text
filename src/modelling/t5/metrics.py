@@ -27,8 +27,8 @@ class Metrics:
         labels: np.ndarray
         predictions, labels = bucket
 
-        # Predictions: Skipping special tokens
-        _predictions = self.__tokenizer.batch_decode(predictions, skip_special_tokens=True)
+        # Predictions: Skipping special tokens / Test {'max_new_tokens': ...}
+        _predictions = self.__tokenizer.batch_decode(predictions, skip_special_tokens=True, **{'max_new_tokens': 256})
 
         # Labels, Active Labels: Re-visit.  Replacing ...
         active = np.where(labels != -100, labels, self.__tokenizer.pad_token_id)
