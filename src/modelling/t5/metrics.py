@@ -35,9 +35,8 @@ class Metrics:
         _labels = self.__tokenizer.batch_decode(active, skip_special_tokens=True)
 
         # Calculations: Initially, Aggregator = True
-        calculations = self.__rouge.compute(
+        calculations: dict = self.__rouge.compute(
             predictions=_predictions, references=_labels, use_aggregator=True, use_stemmer=True)
-        self.__logger.info(type(calculations))
         self.__logger.info(calculations.keys())
 
         # Additionally
