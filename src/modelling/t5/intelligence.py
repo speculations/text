@@ -1,4 +1,5 @@
 """Module intelligence.py"""
+import logging
 import datasets
 import transformers
 
@@ -20,6 +21,12 @@ class Intelligence:
 
         self.__variable = variable
 
+        # Logging
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
+
         # Instances
         self.__metrics = src.modelling.t5.metrics.Metrics()
         self.__parameters = src.modelling.t5.parameters.Parameters()
@@ -28,6 +35,7 @@ class Intelligence:
         # development, if possible.  Test {'max_length': ...}
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint, **{'max_length': 128})
+
         self.__model.to(self.__parameters.device)
 
         # Collator
