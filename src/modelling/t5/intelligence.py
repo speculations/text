@@ -1,17 +1,21 @@
-
+"""Module intelligence.py"""
 import datasets
 import transformers
 
 import src.elements.variable as vr
-import src.modelling.t5.parameters
 import src.modelling.t5.metrics
+import src.modelling.t5.parameters
+
 
 class Intelligence:
+    """
+    The model development class.
+    """
 
     def __init__(self, variable: vr.Variable):
         """
 
-        :param variable:
+        :param variable: A set of values for machine learning model development
         """
 
         self.__variable = variable
