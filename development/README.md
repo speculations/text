@@ -10,6 +10,7 @@ Development Notes
 
 * Beware, model generation configuration settings are undergoing changes.  Instead: [default text generation configuration.](https://huggingface.co/docs/transformers/generation_strategies#default-text-generation-configuration)
 * [Text Generation](https://huggingface.co/docs/transformers/main_classes/text_generation)
+  * [parameters](https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/text_generation#transformers.GenerationConfig)
 
 <br>
 
