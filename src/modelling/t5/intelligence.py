@@ -19,8 +19,12 @@ class Intelligence:
         self.__metrics = src.modelling.t5.metrics.Metrics()
         self.__parameters = src.modelling.t5.parameters.Parameters()
 
+        # Initialising model
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint)
+        self.__model.to(self.__parameters.device)
+
+        # Collator
         self.__data_collator = transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
