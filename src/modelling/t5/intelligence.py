@@ -11,6 +11,7 @@ class Intelligence:
     def __init__(self, variable: vr.Variable):
         """
 
+        :param variable:
         """
 
         self.__variable = variable
