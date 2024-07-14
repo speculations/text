@@ -19,7 +19,8 @@ class Intelligence:
         self.__metrics = src.modelling.t5.metrics.Metrics()
         self.__parameters = src.modelling.t5.parameters.Parameters()
 
-        # Initialising model
+        # Initialising model, and initiating GPU (graphics processing unit) based model
+        # development, if possible
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint)
         self.__model.to(self.__parameters.device)
