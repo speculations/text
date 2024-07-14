@@ -30,7 +30,7 @@ class Metrics:
         # Predictions: Skipping special tokens
         _predictions = self.__tokenizer.batch_decode(predictions, skip_special_tokens=True)
 
-        # Labels, Active Labels: Re-visit.  Replacing -100 values because they cannot be decoded
+        # Labels, Active Labels: Re-visit.  Replacing ...
         active = np.where(labels != -100, labels, self.__tokenizer.pad_token_id)
         _labels = self.__tokenizer.batch_decode(active, skip_special_tokens=True)
 
@@ -40,7 +40,7 @@ class Metrics:
         self.__logger.info(type(calculations))
         self.__logger.info(calculations.keys())
 
-        # Hence
+        # Additionally
         lengths = [np.count_nonzero(prediction != self.__tokenizer.pad_token_id) for prediction in predictions]
         calculations['average'] = np.mean(lengths)
         self.__logger.info(calculations.keys())
