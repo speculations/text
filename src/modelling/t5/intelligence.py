@@ -28,6 +28,7 @@ class Intelligence:
         self.__args = transformers.Seq2SeqTrainingArguments(
             output_dir='bills',
             eval_strategy='epoch',
+            save_strategy='epoch',
             learning_rate=self.__variable.LEARNING_RATE,
             per_device_train_batch_size=self.__variable.TRAIN_BATCH_SIZE,
             per_device_eval_batch_size=self.__variable.TEST_BATCH_SIZE,
@@ -40,7 +41,7 @@ class Intelligence:
             push_to_hub=False
         )
 
-    def __call__(self, data: datasets.DatasetDict) -> transformers.Trainer:
+    def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
 
         trainer = transformers.Seq2SeqTrainer(
             model=self.__model,
