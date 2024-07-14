@@ -32,10 +32,11 @@ class Intelligence:
         self.__parameters = src.modelling.t5.parameters.Parameters()
 
         # Initialising model, and initiating GPU (graphics processing unit) based model
-        # development, if possible.  Test {'max_length': ...}
+        # development, if possible.
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
-            pretrained_model_name_or_path=self.__parameters.checkpoint, **{'max_length': 128})
-
+            pretrained_model_name_or_path=self.__parameters.checkpoint)
+        self.__logger.info(type(self.__model))
+        self.__model.generate(max_new_tokens=64)
         self.__model.to(self.__parameters.device)
 
         # Collator
