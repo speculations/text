@@ -32,4 +32,4 @@ class Interface:
         :return:
         """
 
-        src.modelling.t5.steps.Steps(splits=self.__source).exc()
+        src.modelling.t5.steps.Steps(source=self.__source).exc()
