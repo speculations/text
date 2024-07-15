@@ -11,13 +11,13 @@ import src.modelling.t5.intelligence
 
 class Steps:
 
-    def __init__(self, splits: datasets.DatasetDict):
+    def __init__(self, source: datasets.DatasetDict):
         """
 
         :param splits:
         """
 
-        self.__splits = splits
+        self.__source = source
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
@@ -36,7 +36,7 @@ class Steps:
         """
 
         # T5 tokenized training & testing splits
-        data: datasets.DatasetDict = src.modelling.t5.splittings.Splittings(splits=self.__splits).__call__()
+        data: datasets.DatasetDict = src.modelling.t5.splittings.Splittings(source=self.__source).__call__()
         self.__logger.info(data.keys())
 
         # intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable)
