@@ -37,6 +37,8 @@ class Intelligence:
             pretrained_model_name_or_path=self.__parameters.checkpoint)
         self.__logger.info(type(self.__model))
         self.__model.generate(max_new_tokens=64)
+
+        # To graphics processing unit, if available
         self.__model.to(self.__parameters.device)
 
         # Collator
@@ -50,7 +52,7 @@ class Intelligence:
             save_strategy='epoch',
             learning_rate=self.__variable.LEARNING_RATE,
             per_device_train_batch_size=self.__variable.TRAIN_BATCH_SIZE,
-            per_device_eval_batch_size=self.__variable.TEST_BATCH_SIZE,
+            per_device_eval_batch_size=self.__variable.VALIDATE_BATCH_SIZE,
             weight_decay=0.01,
             num_train_epochs=self.__variable.EPOCHS,
             save_total_limit=3,
@@ -66,7 +68,7 @@ class Intelligence:
             model=self.__model,
             args=self.__args,
             train_dataset=data['train'],
-            eval_dataset=data['test'],
+            eval_dataset=data['validate'],
             tokenizer=self.__parameters.tokenizer,
             data_collator=self.__data_collator,
             compute_metrics=self.__metrics.exc
