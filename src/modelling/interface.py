@@ -38,4 +38,16 @@ class Interface:
         :return:
         """
 
-        src.modelling.t5.steps.Steps(splits=self.__splits).exc()
+        temporary = self.__splits['test'].train_test_split(test_size=0.25)
+
+        cuts = datasets.DatasetDict({
+            'train': self.__splits['train'],
+            'valid': temporary['train'],
+            'test': temporary['test']
+        })
+        self.__logger.info(cuts.keys())
+        self.__logger.info('Training:\n%s', cuts['train'].shape)
+        self.__logger.info('Validating:\n%s', cuts['valid'].shape)
+        self.__logger.info('Testing:\n%s', cuts['test'].shape)
+
+        # src.modelling.t5.steps.Steps(splits=self.__splits).exc()
