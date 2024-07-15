@@ -1,9 +1,15 @@
+"""Module source.py"""
 import logging
+
 import datasets
 
 import config
 
+
 class Source:
+    """
+    A class for data preparation.
+    """
 
     def __init__(self):
         """
@@ -25,14 +31,18 @@ class Source:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def __temporary(self):
+    def __temporary(self) -> datasets.DatasetDict:
+        """
+
+        :return:
+        """
 
         splits: datasets.DatasetDict = self.__dataset['test'].train_test_split(
             test_size=self.__configurations.fraction_validate)
 
-        nodes = splits['test'].train_test_split(test_size=0.25)
+        nodes: datasets.DatasetDict = splits['test'].train_test_split(test_size=0.25)
 
-        splittings = datasets.DatasetDict({
+        splittings: datasets.DatasetDict = datasets.DatasetDict({
             'train': splits['train'],
             'validate': nodes['train'],
             'test': nodes['test']
