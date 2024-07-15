@@ -22,7 +22,7 @@ class Variable(typing.NamedTuple):
         The learning rate; default 2e-05.
 
     MAX_NEW_TOKENS: int
-        https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/text_generation#transformers.GenerationConfig
+        [max_new_tokens](https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/text_generation#transformers.GenerationConfig)
 
 
     """
