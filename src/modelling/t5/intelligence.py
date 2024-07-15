@@ -1,5 +1,6 @@
 """Module intelligence.py"""
 import logging
+
 import datasets
 import transformers
 
