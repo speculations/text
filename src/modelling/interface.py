@@ -3,6 +3,8 @@ import logging
 
 import datasets
 
+import src.modelling.t5.steps
+
 
 class Interface:
     """
@@ -30,4 +32,4 @@ class Interface:
         :return:
         """
 
-        # src.modelling.t5.steps.Steps(splits=self.__source).exc()
+        src.modelling.t5.steps.Steps(splits=self.__source).exc()
