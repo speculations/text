@@ -31,12 +31,13 @@ class Intelligence:
         self.__metrics = src.modelling.t5.metrics.Metrics()
         self.__parameters = src.modelling.t5.parameters.Parameters()
 
-        # Initialising model, and initiating GPU (graphics processing unit) based model
-        # development, if possible.
+        # Initialising model
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint)
         self.__logger.info(type(self.__model))
-        self.__model.generate(max_new_tokens=64)
+
+        # Configure
+        self.__model.generate(max_new_tokens=self.__variable.MAX_NEW_TOKENS)
 
         # To graphics processing unit, if available
         self.__model.to(self.__parameters.device)
@@ -55,7 +56,7 @@ class Intelligence:
             per_device_eval_batch_size=self.__variable.VALIDATE_BATCH_SIZE,
             weight_decay=0.01,
             num_train_epochs=self.__variable.EPOCHS,
-            save_total_limit=3,
+            save_total_limit=2,
             load_best_model_at_end=True,
             predict_with_generate=True,
             fp16=True,
@@ -63,6 +64,11 @@ class Intelligence:
         )
 
     def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
+        """
+
+        :param data:
+        :return:
+        """
 
         trainer = transformers.Seq2SeqTrainer(
             model=self.__model,
