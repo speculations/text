@@ -21,7 +21,7 @@ class Steps:
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
-        self.__variable._replace(EPOCHS=5)
+        self.__variable._replace(EPOCHS=2)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
