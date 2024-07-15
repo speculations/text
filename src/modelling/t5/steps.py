@@ -39,7 +39,7 @@ class Steps:
         data: datasets.DatasetDict = src.modelling.t5.splittings.Splittings(splits=self.__splits).__call__()
         self.__logger.info(data.keys())
 
-        intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable)
-        model: transformers.Seq2SeqTrainer = intelligence(data=data)
-        self.__logger.info(model.__dir__())
+        # intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable)
+        # model: transformers.Seq2SeqTrainer = intelligence(data=data)
+        # self.__logger.info(model.__dir__())
         # model.save_model()
