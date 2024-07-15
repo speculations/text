@@ -9,13 +9,13 @@ class Splittings:
     This class splits a datasets.Dataset into T5 tokenized training & testing sets
     """
 
-    def __init__(self, splits: datasets.DatasetDict):
+    def __init__(self, source: datasets.DatasetDict):
         """
 
-        :param splits: Training, ...
+        :param source: Training, ...
         """
 
-        self.__splits = splits
+        self.__source = source
 
         # Instances
         self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing()
@@ -27,4 +27,4 @@ class Splittings:
         """
 
         # Converting each split into a T5 tokenized split
-        return self.__splits.map(self.__preprocessing.exc, batched=True)
+        return self.__source.map(self.__preprocessing.exc, batched=True)
