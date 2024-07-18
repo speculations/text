@@ -19,7 +19,7 @@ class Intelligence:
         self.__model.generate(max_new_tokens=self.__variable.MAX_NEW_TOKENS)
 
         :param variable: A set of values for machine learning model development
-        :param device:
+        :param device: 'cuda' or 'cpu'
         """
 
         self.__variable = variable
@@ -41,7 +41,7 @@ class Intelligence:
 
         # To graphics processing unit, if available
         self.__model.to(device)
-        
+
     def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
         """
 
