@@ -14,10 +14,12 @@ class Intelligence:
     The model development class.
     """
 
-    def __init__(self, variable: vr.Variable):
+    def __init__(self, variable: vr.Variable, device: str):
         """
+        self.__model.generate(max_new_tokens=self.__variable.MAX_NEW_TOKENS)
 
         :param variable: A set of values for machine learning model development
+        :param device:
         """
 
         self.__variable = variable
@@ -37,11 +39,8 @@ class Intelligence:
             pretrained_model_name_or_path=self.__parameters.checkpoint)
         self.__logger.info(type(self.__model))
 
-        # Configure
-        self.__model.generate(max_new_tokens=self.__variable.MAX_NEW_TOKENS)
-
         # To graphics processing unit, if available
-        self.__model.to(self.__parameters.device)
+        self.__model.to(device)
 
         # Collator
         self.__data_collator = transformers.DataCollatorForSeq2Seq(
