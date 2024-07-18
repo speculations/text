@@ -24,8 +24,8 @@ class Steps:
         self.__variable = vr.Variable()
         self.__variable._replace(EPOCHS=2)
 
-        # Instances
-        self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing()
+        # Preprocessing Instance: For tokenization.
+        self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
