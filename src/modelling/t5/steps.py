@@ -4,24 +4,28 @@ import datasets
 import transformers
 
 import src.elements.variable as vr
-
-import src.modelling.t5.splittings
 import src.modelling.t5.intelligence
+import src.modelling.t5.preprocessing
 
 
 class Steps:
 
-    def __init__(self, source: datasets.DatasetDict):
+    def __init__(self, source: datasets.DatasetDict, device: str):
         """
 
-        :param splits:
+        :param source: A dictionary of data splits; training, validation, etc., splits.
+        :param device:
         """
 
         self.__source = source
+        self.__device = device
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
         self.__variable._replace(EPOCHS=2)
+
+        # Instances
+        self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -31,15 +35,18 @@ class Steps:
 
     def exc(self):
         """
+        model.save_model()
 
         :return:
         """
 
-        # T5 tokenized training & testing splits
-        data: datasets.DatasetDict = src.modelling.t5.splittings.Splittings(source=self.__source).__call__()
+        # Converting each split into a T5 tokenized split
+        data: datasets.DatasetDict = self.__source.map(self.__preprocessing.exc, batched=True)
+        self.__logger.info(self.__source.keys())
         self.__logger.info(data.keys())
 
-        # intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable)
-        # model: transformers.Seq2SeqTrainer = intelligence(data=data)
-        # self.__logger.info(model.__dir__())
-        # model.save_model()
+        # Model
+        intelligence = src.modelling.t5.intelligence.Intelligence(
+            variable=self.__variable, device=self.__device)
+        model: transformers.Seq2SeqTrainer = intelligence(data=data)
+        self.__logger.info(model.__dir__())
