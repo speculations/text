@@ -24,15 +24,15 @@ class Intelligence:
 
         self.__variable = variable
 
+        # Instances
+        self.__metrics = src.modelling.t5.metrics.Metrics()
+        self.__parameters = src.modelling.t5.parameters.Parameters()
+
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
-
-        # Instances
-        self.__metrics = src.modelling.t5.metrics.Metrics()
-        self.__parameters = src.modelling.t5.parameters.Parameters()
 
         # Initialising model
         self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
@@ -41,13 +41,24 @@ class Intelligence:
 
         # To graphics processing unit, if available
         self.__model.to(device)
+        
+    def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
+        """
 
-        # Collator
-        self.__data_collator = transformers.DataCollatorForSeq2Seq(
+        :return:
+        """
+
+        return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
+    def __args(self) -> transformers.Seq2SeqTrainingArguments:
+        """
+
+        :return:
+        """
+
         # Arguments
-        self.__args = transformers.Seq2SeqTrainingArguments(
+        return transformers.Seq2SeqTrainingArguments(
             output_dir='bills',
             eval_strategy='epoch',
             save_strategy='epoch',
@@ -72,11 +83,11 @@ class Intelligence:
 
         trainer = transformers.Seq2SeqTrainer(
             model=self.__model,
-            args=self.__args,
+            args=self.__args(),
             train_dataset=data['train'],
             eval_dataset=data['validate'],
             tokenizer=self.__parameters.tokenizer,
-            data_collator=self.__data_collator,
+            data_collator=self.__data_collator(),
             compute_metrics=self.__metrics.exc
         )
 
