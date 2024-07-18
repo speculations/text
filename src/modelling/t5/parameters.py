@@ -2,13 +2,16 @@ import torch
 import transformers
 
 class Parameters:
+    """
+    Class: Parameters
+    """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
-        self.max_length_input = 1024
-        self.max_length_target = 128
-
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.input_prefix = 'summarize: '
 
         self.checkpoint = 'google-t5/t5-small'
         self.tokenizer: transformers.PreTrainedTokenizerFast = (
