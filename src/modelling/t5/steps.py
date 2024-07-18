@@ -1,14 +1,19 @@
 import logging
+import os
 
 import datasets
 import transformers
 
 import src.elements.variable as vr
+import src.modelling.t5.depositories
 import src.modelling.t5.intelligence
 import src.modelling.t5.preprocessing
 
 
 class Steps:
+    """
+    Class Steps
+    """
 
     def __init__(self, source: datasets.DatasetDict, device: str):
         """
@@ -40,6 +45,10 @@ class Steps:
         :return:
         """
 
+        # Re-write
+        output_directory = os.path.join('warehouse', 't5')
+        src.modelling.t5.depositories.Depositories().exc(path=output_directory)
+
         # Converting each split into a T5 tokenized split
         data: datasets.DatasetDict = self.__source.map(self.__preprocessing.exc, batched=True)
         self.__logger.info(self.__source.keys())
@@ -47,6 +56,6 @@ class Steps:
 
         # Model
         intelligence = src.modelling.t5.intelligence.Intelligence(
-            variable=self.__variable, device=self.__device)
+            variable=self.__variable, device=self.__device, output_directory=output_directory)
         model: transformers.Seq2SeqTrainer = intelligence(data=data)
         self.__logger.info(model.__dir__())
