@@ -3,18 +3,23 @@ import logging
 import datasets.formatting.formatting
 import transformers
 
-import src.modelling.t5.parameters
+import src.elements.variable as vr
+import src.modelling.t5.parameters as pr
+
 
 class Preprocessing:
 
-    def __init__(self):
+    def __init__(self, variable: vr.Variable):
+        """
 
-        parameters = src.modelling.t5.parameters.Parameters()
-        self.__tokenizer: transformers.PreTrainedTokenizerFast = parameters.tokenizer
-        self.__max_length_input = parameters.max_length_input
-        self.__max_length_target = parameters.max_length_target
+        :param variable:
+        """
 
-        self.__prefix = 'summarize: '
+        self.__variable = variable
+
+        # The T5 specific parameters, and the T5 specific tokenizer
+        self.__parameters = pr.Parameters()
+        self.__tokenizer: transformers.PreTrainedTokenizerFast = self.__parameters.tokenizer
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -30,13 +35,13 @@ class Preprocessing:
         """
 
         # Independent Variable
-        inputs = [self.__prefix + segment for segment in blob['text']]
+        inputs = [self.__parameters.input_prefix + segment for segment in blob['text']]
         structure: transformers.BatchEncoding = self.__tokenizer(
-            text=inputs, max_length=self.__max_length_input, truncation=True)
+            text=inputs, max_length=self.__variable.MAX_LENGTH_INPUT, truncation=True)
 
         # Dependent Variable; targets has a dictionary structure, wherein the keys are <input_ids> & <attention_mask>
         targets: transformers.BatchEncoding = self.__tokenizer(
-            text_target=blob['summary'], max_length=self.__max_length_target, truncation=True)
+            text_target=blob['summary'], max_length=self.__variable.MAX_LENGTH_TARGET, truncation=True)
         structure['labels']  = targets['input_ids']
 
         return structure
