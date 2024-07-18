@@ -18,7 +18,9 @@ class Source:
 
         self.__configurations = config.Config()
 
-        # The Data
+        # The Data: Herein, the dictionary segments are being reset such that
+        # the segments are <training>, <validate>, and <test>; initially <training>,
+        # <test>, and <ca_test> respectively.
         self.__dataset: datasets.DatasetDict = datasets.load_dataset('billsum')
         validate = self.__dataset.pop('test')
         test = self.__dataset.pop('ca_test')
@@ -68,5 +70,7 @@ class Source:
         self.__logger.info('Training:\n%s', temporary['train'].shape)
         self.__logger.info('Validating:\n%s', temporary['validate'].shape)
         self.__logger.info('Testing:\n%s', temporary['test'].shape)
+
+        self.__logger.info('The parts of a data record:\n%s', temporary['train'][0].keys())
 
         return temporary
