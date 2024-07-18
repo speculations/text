@@ -1,9 +1,10 @@
-import torch
 import transformers
 
 class Parameters:
     """
     Class: Parameters
+
+    For setting terms that are particular to a model architecture type
     """
 
     def __init__(self):
