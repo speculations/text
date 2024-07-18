@@ -24,7 +24,11 @@ class Variable(typing.NamedTuple):
     MAX_NEW_TOKENS: int
         [max_new_tokens](https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/text_generation#transformers.GenerationConfig)
 
+    MAX_LENGTH_INPUT: int
+        The maximum sequence length of the independent variable
 
+    MAX_LENGTH_TARGET: int
+        The maximum sequence length of the dependent/target variable
     """
 
     TRAIN_BATCH_SIZE: int = 16
@@ -32,4 +36,6 @@ class Variable(typing.NamedTuple):
     TEST_BATCH_SIZE: int = 16
     EPOCHS: int = 8
     LEARNING_RATE: float = 2e-05
-    MAX_NEW_TOKENS = 32
+    MAX_NEW_TOKENS: int = 32
+    MAX_LENGTH_INPUT: int = 1024
+    MAX_LENGTH_TARGET: int = 32
