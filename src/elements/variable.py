@@ -3,6 +3,7 @@ import typing
 
 class Variable(typing.NamedTuple):
     """
+    Generic attributes for machine learning model development
 
     Attributes
     ----------
@@ -25,10 +26,12 @@ class Variable(typing.NamedTuple):
         [max_new_tokens](https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/text_generation#transformers.GenerationConfig)
 
     MAX_LENGTH_INPUT: int
-        The maximum sequence length of the independent variable
+        The maximum sequence length of the independent variable.  In the case of the California Bills data,
+        the <text> key represents the independent variable.
 
     MAX_LENGTH_TARGET: int
-        The maximum sequence length of the dependent/target variable
+        The maximum sequence length of the dependent/target variable.  In the case of the California Bills data,
+        the <summary> key represents the independent variable.
     """
 
     TRAIN_BATCH_SIZE: int = 16
