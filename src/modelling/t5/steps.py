@@ -27,7 +27,7 @@ class Steps:
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
-        self.__variable._replace(EPOCHS=2)
+        self.__variable = self.__variable._replace(EPOCHS=2)
 
         # Preprocessing Instance: For tokenization.
         self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable)
