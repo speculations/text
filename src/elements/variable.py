@@ -1,5 +1,6 @@
-
+"""Module variable.py"""
 import typing
+
 
 class Variable(typing.NamedTuple):
     """
@@ -23,7 +24,8 @@ class Variable(typing.NamedTuple):
         The learning rate; default 2e-05.
 
     MAX_NEW_TOKENS: int
-        [max_new_tokens](https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/text_generation#transformers.GenerationConfig)
+        [max_new_tokens](https://huggingface.co/docs/transformers/v4.42.0/en/main_classes/\
+            text_generation#transformers.GenerationConfig)
 
     MAX_LENGTH_INPUT: int
         The maximum sequence length of the independent variable.  In the case of the California Bills data,
