@@ -1,3 +1,4 @@
+"""Module steps.py"""
 import logging
 import os
 
@@ -58,4 +59,4 @@ class Steps:
         intelligence = src.modelling.t5.intelligence.Intelligence(
             variable=self.__variable, device=self.__device, output_directory=output_directory)
         model: transformers.Seq2SeqTrainer = intelligence(data=data)
-        self.__logger.info(model.__dir__())
+        self.__logger.info(dir(model))
