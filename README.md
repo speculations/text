@@ -15,6 +15,8 @@ on automatic summarisation metrics; both data structuring and architecture relat
 
 * Recall-Oriented Understudy for Gisting Evaluation (ROUGE)
   * [ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013.pdf)
+  * [Automatic Evaluation of Summaries Using N-gram Co-Occurrence Statistics](https://aclanthology.org/N03-1020.pdf)
+  * [Automatic Evaluation of Machine Translation Quality Using Longest Common Subsequence and Skip-Bigram Statistics](https://aclanthology.org/P04-1077.pdf)
   * [Metric Card for ROUGE](https://huggingface.co/spaces/evaluate-metric/rouge)
 * [Measuring Bias in Contextualized Word Representations](https://arxiv.org/pdf/1906.07337)
 * Aspects of [How to Compute the Probability of a Word](https://arxiv.org/pdf/2406.14561)
@@ -91,8 +93,6 @@ Critical Classes & Utilities:
   * [rouge](https://huggingface.co/spaces/evaluate-metric/rouge)
   * [Utilities for Trainer: EvalPrediction](https://huggingface.co/docs/transformers/v4.42.0/en/internal/trainer_utils#transformers.EvalPrediction)
 
-<br>
-<br>
 
 <br>
 <br>
@@ -105,4 +105,3 @@ Critical Classes & Utilities:
 
 <br>
 <br>
-
