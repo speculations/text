@@ -1,12 +1,8 @@
 <br>
 
-## FOCUS
+## Focus
 
-Use this baseline repository to investigate the items that can impact the mathematical performance of an abstractive text summarisation model, and to explore plausible business metrics.
-
-<br>
-
-Determine the direct or indirect effects of
+Use this baseline repository to investigate the items that can impact the mathematical performance of an abstractive text summarisation model, and to explore plausible business metrics.  Determine the direct or indirect effects of
 
 * parameters
 * hyperparameters
@@ -22,19 +18,15 @@ on automatic summarisation metrics; both data structuring and architecture relat
 * Aspects of [How to Compute the Probability of a Word](https://arxiv.org/pdf/2406.14561)
 * Aspects of [Understanding Evaluation Metrics for Language Models](https://thegradient.pub/understanding-evaluation-metrics-for-language-models/)
 
-<br>
-
 Determine the strengths and weaknesses of each metric, considering the problem in question, i.e., abstractive text summarisation; noting that the characteristics of a language, and its dialects, may impact the appropriateness of a metric.
 
 
-<br>
 <br>
 
 
 ## Upcoming
 
 The production environments products, which lead on from the design herein, will address
-
 
 ### Products
 
@@ -68,12 +60,13 @@ Launch templates, and orchestration templates, for model/system
 * re-training
 
 <br>
-<br>
 
 
 ## References
 
-[Example](https://huggingface.co/docs/transformers/tasks/summarization); [T5](https://huggingface.co/google-t5).
+Example:
+
+* [T5: Text-To-Text Transfer Transformer](https://huggingface.co/docs/transformers/tasks/summarization); [T5](https://huggingface.co/google-t5).
 
 <br>
 
@@ -92,7 +85,6 @@ Critical Classes & Utilities:
   * [metrics & batch_decode](https://huggingface.co/docs/transformers/main_classes/tokenizer#transformers.PreTrainedTokenizer.batch_decode)
   * [rouge](https://huggingface.co/spaces/evaluate-metric/rouge)
   * [Utilities for Trainer: EvalPrediction](https://huggingface.co/docs/transformers/v4.42.0/en/internal/trainer_utils#transformers.EvalPrediction)
-
 
 <br>
 <br>
