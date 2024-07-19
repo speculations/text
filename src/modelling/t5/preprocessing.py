@@ -1,5 +1,4 @@
-import logging
-
+"""Module preprocessing.py"""
 import datasets.formatting.formatting
 import transformers
 
@@ -8,11 +7,19 @@ import src.modelling.t5.parameters as pr
 
 
 class Preprocessing:
+    """
+    Class Preprocessing
+
+    This class preprocesses a data batch, e.g., splits for model
+    development, in line with T5 (Text-To-Text Transfer Transformer)
+    architecture expectations.
+    """
 
     def __init__(self, variable: vr.Variable):
         """
 
-        :param variable:
+        :param variable: A suite of values for machine learning
+                         model development
         """
 
         self.__variable = variable
@@ -20,12 +27,6 @@ class Preprocessing:
         # The T5 specific parameters, and the T5 specific tokenizer
         self.__parameters = pr.Parameters()
         self.__tokenizer: transformers.PreTrainedTokenizerFast = self.__parameters.tokenizer
-
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
 
     def exc(self, blob: datasets.formatting.formatting.LazyBatch) -> transformers.BatchEncoding:
         """
