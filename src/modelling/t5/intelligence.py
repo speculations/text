@@ -16,7 +16,6 @@ class Intelligence:
 
     def __init__(self, variable: vr.Variable, device: str, output_directory: str):
         """
-        self.__model.generate(max_new_tokens=self.__variable.MAX_NEW_TOKENS)
 
         :param variable: A set of values for machine learning model development
         :param device: 'cuda' or 'cpu'
@@ -37,8 +36,11 @@ class Intelligence:
         self.__logger = logging.getLogger(__name__)
 
         # Initialising model
+        # max_new_tokens=self.__variable.MAX_NEW_TOKENS
         config = transformers.GenerationConfig.from_pretrained(pretrained_model_name=self.__parameters.checkpoint)
+        self.__logger.info(config.max_new_tokens)
         config.max_new_tokens = self.__variable.MAX_NEW_TOKENS
+        self.__logger.info(config.max_new_tokens)
         self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
 
