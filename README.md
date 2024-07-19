@@ -20,6 +20,7 @@ on automatic summarisation metrics; both data structuring and architecture relat
 * Aspects of [How to Compute the Probability of a Word](https://arxiv.org/pdf/2406.14561)
 * Aspects of [Understanding Evaluation Metrics for Language Models](https://thegradient.pub/understanding-evaluation-metrics-for-language-models/)
 
+<br>
 
 Determine the strengths and weaknesses of each metric, considering the problem in question, i.e., abstractive text summarisation; noting that the characteristics of a language, and its dialects, may impact the appropriateness of a metric.
 
@@ -32,7 +33,6 @@ Determine the strengths and weaknesses of each metric, considering the problem i
 
 The production environments products, which lead on from the design herein, will address
 
-<br>
 
 ### Products
 
@@ -49,8 +49,10 @@ The production environments products, which lead on from the design herein, will
 
 ### Warning Messages
 
+These warning messages will be addressed:
+
 * There were missing keys in the checkpoint model loaded: ['encoder.embed_tokens.weight', 'decoder.embed_tokens.weight', 'lm_head.weight'].
-*  UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.<br>Partially addressed within 
+*  UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
 
 <br>
 
