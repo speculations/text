@@ -38,8 +38,8 @@ class Intelligence:
         # Configurations
         config = transformers.GenerationConfig.from_pretrained(
             pretrained_model_name=self.__parameters.checkpoint, **{'max_new_tokens': self.__variable.MAX_NEW_TOKENS})
-        self.__logger.info(config.max_length)
-        self.__logger.info(config.max_new_tokens)
+        self.__logger.info('max_length: %s', config.max_length)
+        self.__logger.info('max_new_tokens: %s', config.max_new_tokens)
 
         # Model initialisation
         self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration
@@ -84,7 +84,7 @@ class Intelligence:
     def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
         """
 
-        :param data:
+        :param data: The data; tokenized.
         :return:
         """
 
