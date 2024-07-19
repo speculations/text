@@ -66,7 +66,6 @@ Example:
 
 * [T5: Text-To-Text Transfer Transformer](https://huggingface.co/docs/transformers/tasks/summarization); [T5](https://huggingface.co/google-t5).
 
-<br>
 
 Critical Classes & Utilities:
 
