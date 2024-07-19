@@ -1,17 +1,27 @@
+"""Module metrics.py"""
 import logging
-import numpy as np
+
 import evaluate
+import numpy as np
 
 import src.modelling.t5.parameters
 
+
 class Metrics:
+    """
+    For the compute_metrics parameter of Trainer modules, e.g.,
+    transformers.Seq2SeqTrainer
+    """
 
     def __init__(self):
+        """
+        Constructor
+        """
 
         self.__parameters = src.modelling.t5.parameters.Parameters()
-
         self.__tokenizer = self.__parameters.tokenizer
 
+        # ROUGE
         self.__rouge = evaluate.load('rouge')
 
         # Logging
@@ -20,28 +30,59 @@ class Metrics:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
+    def __predictions(self, predictions: np.ndarray):
+        """
+
+        :param predictions: A model's predictions
+        :return:
+        """
+
+        # Predictions: Skipping special tokens
+        return self.__tokenizer.batch_decode(predictions, skip_special_tokens=True)
+
+    def __labels(self, labels: np.ndarray):
+        """
+
+        :param labels: The labels vis-à-vis the dependent variable data
+        :return:
+        """
+
+        # Labels, Active Labels: Re-visit.  Replacing ...
+        active = np.where(labels != -100, labels, self.__tokenizer.pad_token_id)
+
+        return self.__tokenizer.batch_decode(active, skip_special_tokens=True)
+
+    def __extra_median(self, predictions: np.ndarray):
+        """
+
+        :param predictions: A model's predictions
+        :return:
+        """
+
+        lengths = [np.count_nonzero(prediction != self.__tokenizer.pad_token_id)
+                   for prediction in predictions]
+
+        return np.median(lengths)
+
+
     def exc(self, bucket):
+        """
+
+        :param bucket: A data object of predictions, and the corresponding
+                       dependent variable data
+        :return:
+        """
 
         self.__logger.info('BUCKET:\n%s', type(bucket))
         predictions: np.ndarray
         labels: np.ndarray
         predictions, labels = bucket
 
-        # Predictions: Skipping special tokens
-        _predictions = self.__tokenizer.batch_decode(predictions, skip_special_tokens=True)
-
-        # Labels, Active Labels: Re-visit.  Replacing ...
-        active = np.where(labels != -100, labels, self.__tokenizer.pad_token_id)
-        _labels = self.__tokenizer.batch_decode(active, skip_special_tokens=True)
-
         # Calculations: Initially, Aggregator = True
         calculations: dict = self.__rouge.compute(
-            predictions=_predictions, references=_labels, use_aggregator=True, use_stemmer=True)
-        self.__logger.info(calculations.keys())
-
-        # Additionally
-        lengths = [np.count_nonzero(prediction != self.__tokenizer.pad_token_id) for prediction in predictions]
-        calculations['average'] = np.mean(lengths)
+            predictions=self.__predictions(predictions=predictions),
+            references=self.__labels(labels=labels), use_aggregator=True, use_stemmer=True)
+        calculations['median'] = self.__extra_median(predictions=predictions)
         self.__logger.info(calculations.keys())
 
         # Rounding
