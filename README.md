@@ -39,16 +39,14 @@ The production environments products, which lead on from the design herein, will
   * Amazon Elastic Container Registry (ECR)
   * GitHub Container Registry (GCR)
 
-<br>
 
 ### Warning Messages
 
 These warning messages will be addressed:
 
 * There were missing keys in the checkpoint model loaded: ['encoder.embed_tokens.weight', 'decoder.embed_tokens.weight', 'lm_head.weight'].
-*  UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+* UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
 
-<br>
 
 ### Amazon Development & Deployment 
 
