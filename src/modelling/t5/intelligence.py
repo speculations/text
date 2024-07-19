@@ -25,23 +25,25 @@ class Intelligence:
         self.__variable = variable
         self.__output_directory = output_directory
 
-        # Instances
-        self.__metrics = src.modelling.t5.metrics.Metrics()
-        self.__parameters = src.modelling.t5.parameters.Parameters()
-
         # Logging
         logging.basicConfig(level=logging.INFO,
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-        # Initialising model
-        # max_new_tokens=self.__variable.MAX_NEW_TOKENS
+        # Instances
+        self.__metrics = src.modelling.t5.metrics.Metrics()
+        self.__parameters = src.modelling.t5.parameters.Parameters()
+
+        # Configurations
         config = transformers.GenerationConfig.from_pretrained(
             pretrained_model_name=self.__parameters.checkpoint, **{'max_new_tokens': self.__variable.MAX_NEW_TOKENS})
         self.__logger.info(config.max_length)
         self.__logger.info(config.max_new_tokens)
-        self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration = transformers.AutoModelForSeq2SeqLM.from_pretrained(
+
+        # Model initialisation
+        self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration
+        self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
 
         # To graphics processing unit, if available
