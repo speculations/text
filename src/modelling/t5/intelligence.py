@@ -37,9 +37,10 @@ class Intelligence:
         self.__logger = logging.getLogger(__name__)
 
         # Initialising model
-        self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
-            pretrained_model_name_or_path=self.__parameters.checkpoint)
-        self.__logger.info(type(self.__model))
+        config = transformers.GenerationConfig.from_pretrained(pretrained_model_name=self.__parameters.checkpoint)
+        config.max_new_tokens = self.__variable.MAX_NEW_TOKENS
+        self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration = transformers.AutoModelForSeq2SeqLM.from_pretrained(
+            pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
 
         # To graphics processing unit, if available
         self.__model.to(device)
