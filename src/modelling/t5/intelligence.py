@@ -37,9 +37,9 @@ class Intelligence:
 
         # Initialising model
         # max_new_tokens=self.__variable.MAX_NEW_TOKENS
-        config = transformers.GenerationConfig.from_pretrained(pretrained_model_name=self.__parameters.checkpoint)
-        self.__logger.info(config.max_new_tokens)
-        config.max_new_tokens = self.__variable.MAX_NEW_TOKENS
+        config = transformers.GenerationConfig.from_pretrained(
+            pretrained_model_name=self.__parameters.checkpoint, **{'max_new_tokens': self.__variable.MAX_NEW_TOKENS})
+        self.__logger.info(config.max_length)
         self.__logger.info(config.max_new_tokens)
         self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration = transformers.AutoModelForSeq2SeqLM.from_pretrained(
             pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
