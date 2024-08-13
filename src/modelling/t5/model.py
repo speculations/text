@@ -3,19 +3,19 @@ import logging
 import transformers
 
 import src.elements.variable as vr
-import src.modelling.t5.parameters
+import src.modelling.t5.parameters as pr
 
 
 class Model:
 
-    def __init__(self, variable: vr.Variable):
+    def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
 
         :param variable:
         """
 
         self.__variable = variable
-        self.__parameters = src.modelling.t5.parameters.Parameters()
+        self.__parameters = parameters
 
         # Logging
         logging.basicConfig(level=logging.INFO,
