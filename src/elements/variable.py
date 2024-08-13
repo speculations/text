@@ -1,6 +1,5 @@
 """Module variable.py"""
 import typing
-import config
 
 
 class Variable(typing.NamedTuple):
@@ -35,7 +34,7 @@ class Variable(typing.NamedTuple):
     MAX_LENGTH_TARGET: int
         The maximum sequence length of the dependent/target variable.  In the case of the California Bills data,
         the <summary> key represents the independent variable.
-        
+
     MODEL_OUTPUT_DIRECTORY: str
         A directory for model outputs
     """
