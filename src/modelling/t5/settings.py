@@ -1,4 +1,6 @@
+"""Module settings"""
 import os
+
 import ray
 import ray.tune
 import ray.tune.schedulers as rts
@@ -12,7 +14,8 @@ class Settings:
     def __init__(self, variable: vr.Variable):
         """
 
-        :param variable:
+        :param variable: A suite of values for machine learning
+                         model development
         """
 
         self.__variable = variable
@@ -26,8 +29,12 @@ class Settings:
         }
 
     def scheduler(self):
+        """
+        
+        :return:
+        """
 
-        scheduler = rts.PopulationBasedTraining(
+        return rts.PopulationBasedTraining(
             time_attr='training_iteration',
             metric='',
             mode='max',
@@ -40,8 +47,6 @@ class Settings:
             quantile_fraction=0.25,
             resample_probability=0.25
         )
-
-        return scheduler
 
     def args(self) -> transformers.Seq2SeqTrainingArguments:
         """
