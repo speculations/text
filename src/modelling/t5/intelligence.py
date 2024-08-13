@@ -103,6 +103,8 @@ class Intelligence:
             compute_metrics=self.__metrics.exc
         )
 
+        # trainer.hyperparameter_search()
+
         trainer.train()
 
         return trainer
