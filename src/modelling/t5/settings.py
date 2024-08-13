@@ -14,19 +14,24 @@ class Settings:
         'num_train_epochs': ray.tune.choice([2, 3, 4, 5])
     }
 
-    rts.PopulationBasedTraining(
+    scheduler = rts.PopulationBasedTraining(
         time_attr='training_iteration',
         metric='',
         mode='max',
         perturbation_interval=perturbation_interval,
         hyperparam_mutations={
-            'lr': ray.tune.qloguniform(lower=5e-3, upper=1e-1, q=5e-4),
-            'h0': ray.tune.uniform(lower=0.0, upper=1.0),
-            'h1': ray.tune.uniform(lower=0.0, upper=1.0)
+            'learning_rate': ray.tune.uniform(lower=5e-3, upper=1e-1),
+            'weight_decay': ray.tune.uniform(lower=0.0, upper=0.25),
+            'per_device_train_batch_size': [16, 32, 64]
         },
         quantile_fraction=0.25,
         resample_probability=0.25
-
     )
+
+    param_space = {
+        'learning_rate': 0.05
+    }
+
+
 
 
