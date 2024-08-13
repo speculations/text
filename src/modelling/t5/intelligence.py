@@ -7,7 +7,7 @@ import transformers
 import src.elements.variable as vr
 import src.modelling.t5.metrics
 import src.modelling.t5.model
-import src.modelling.t5.parameters
+import src.modelling.t5.parameters as pr
 import src.modelling.t5.settings
 
 
@@ -16,23 +16,23 @@ class Intelligence:
     The model development class.
     """
 
-    def __init__(self, variable: vr.Variable):
+    def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
 
         :param variable: A set of values for machine learning model development
         """
 
         self.__variable = variable
+        self.__parameters = parameters
 
         # Setting: scheduler, arguments, ...
         self.__settings = src.modelling.t5.settings.Settings(variable=variable)
 
         # Instances
         self.__metrics = src.modelling.t5.metrics.Metrics()
-        self.__parameters = src.modelling.t5.parameters.Parameters()
 
         # To graphics processing unit, if available
-        self.__model = src.modelling.t5.model.Model(variable=variable).exc()
+        self.__model = src.modelling.t5.model.Model(variable=variable, parameters=self.__parameters).exc()
         self.__model.to(self.__variable.DEVICE)
 
     def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
