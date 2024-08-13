@@ -29,10 +29,8 @@ class Steps:
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
-        self.__variable = self.__variable._replace(
-            EPOCHS=2,
-            MODEL_OUTPUT_DIRECTORY=os.path.join(config.Config().warehouse, 't5'),
-            DEVICE=device)
+        self.__variable = self.__variable._replace(MODEL_OUTPUT_DIRECTORY=os.path.join(config.Config().warehouse, 't5'),
+            DEVICE=device, EPOCHS=2)
 
         # Parameters
         self.parameters = pr.Parameters()
@@ -42,17 +40,6 @@ class Steps:
                             format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
-
-    def __after_tokenization(self) -> datasets.DatasetDict:
-
-        # Preprocessing Instance: For tokenization.
-        preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable, parameters=self.parameters)
-
-        # Converting each split into a T5 tokenized split
-        data: datasets.DatasetDict = self.__source.map(preprocessing.exc, batched=True)
-        self.__logger.info('source: %s\ndata: %s', self.__source.keys(), data.keys())
-
-        return data
 
     def exc(self):
         """
@@ -64,8 +51,9 @@ class Steps:
         # Re-write
         src.modelling.t5.depositories.Depositories().exc(path=self.__variable.MODEL_OUTPUT_DIRECTORY)
 
-        # The data, after tokenization
-        data = self.__after_tokenization()
+        # Preprocessing Instance: For tokenization.  Converting each split into a T5 tokenized split
+        preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable, parameters=self.parameters)
+        data: datasets.DatasetDict = self.__source.map(preprocessing.exc, batched=True)
 
         # Model
         intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable, parameters=self.parameters)
