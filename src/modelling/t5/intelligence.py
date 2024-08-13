@@ -46,8 +46,6 @@ class Intelligence:
         return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
-
-
     def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
         """
         trainer.hyperparameter_search()
