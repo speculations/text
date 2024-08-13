@@ -65,6 +65,7 @@ Launch templates, and orchestration templates, for model/system
 Example:
 
 * [T5: Text-To-Text Transfer Transformer](https://huggingface.co/docs/transformers/tasks/summarization); [T5](https://huggingface.co/google-t5).
+* [Population Based Training](https://deepmind.google/discover/blog/population-based-training-of-neural-networks/), ([paper](https://arxiv.org/abs/1711.09846))
 
 
 Critical Classes & Utilities:
