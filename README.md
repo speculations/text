@@ -1,13 +1,8 @@
 <br>
 
-## Focus
+### Notes
 
-Use this baseline repository to investigate the items that can impact the mathematical performance of an abstractive text summarisation model, and to explore plausible business metrics.  Determine the direct or indirect effects of
-
-* parameters
-* hyperparameters
-
-on automatic summarisation metrics; both data structuring and architecture related parameters and hyperparameters.  Of interest
+Of interest
 
 * Recall-Oriented Understudy for Gisting Evaluation (ROUGE)
   * [ROUGE: A Package for Automatic Evaluation of Summaries](https://aclanthology.org/W04-1013.pdf)
@@ -18,27 +13,7 @@ on automatic summarisation metrics; both data structuring and architecture relat
 * Aspects of [How to Compute the Probability of a Word](https://arxiv.org/pdf/2406.14561)
 * Aspects of [Understanding Evaluation Metrics for Language Models](https://thegradient.pub/understanding-evaluation-metrics-for-language-models/)
 
-
-
-
 <br>
-
-
-## Upcoming
-
-The production environments products, which lead on from the design herein, will address
-
-### Products
-
-* Saving tokenized data sets.
-* Saving models.
-* Default assets directories
-  * Temporary Amazon Compute Machines
-  * Amazon S3 (Simple Storage Service)
-* Default container registry details for
-  * Amazon Elastic Container Registry (ECR)
-  * GitHub Container Registry (GCR)
-
 
 ### Warning Messages
 
@@ -47,18 +22,7 @@ These warning messages will be addressed:
 * There were missing keys in the checkpoint model loaded: ['encoder.embed_tokens.weight', 'decoder.embed_tokens.weight', 'lm_head.weight'].
 * UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
 
-
-### Amazon Development & Deployment 
-
-Launch templates, and orchestration templates, for model/system
-
-* development
-* deployment
-* monitoring
-* re-training
-
 <br>
-
 
 ## References
 
@@ -66,7 +30,6 @@ Example:
 
 * [T5: Text-To-Text Transfer Transformer](https://huggingface.co/docs/transformers/tasks/summarization); [T5](https://huggingface.co/google-t5).
 * [Population Based Training](https://deepmind.google/discover/blog/population-based-training-of-neural-networks/), ([paper](https://arxiv.org/abs/1711.09846))
-
 
 Critical Classes & Utilities:
 
