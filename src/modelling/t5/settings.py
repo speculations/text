@@ -26,9 +26,3 @@ class Settings:
         'per_device_eval_batch_size': 32,
         'num_train_epochs': ray.tune.choice([2, 3, 4, 5])
     }
-
-    
-
-
-
-
