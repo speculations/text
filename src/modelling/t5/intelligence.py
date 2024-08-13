@@ -1,5 +1,6 @@
 """Module intelligence.py"""
 import logging
+import os.path
 
 import datasets
 import transformers
@@ -65,14 +66,20 @@ class Intelligence:
         # Arguments
         return transformers.Seq2SeqTrainingArguments(
             output_dir=self.__variable.MODEL_OUTPUT_DIRECTORY,
+            do_train=True,
+            do_eval=True,
             eval_strategy='epoch',
             save_strategy='epoch',
             learning_rate=self.__variable.LEARNING_RATE,
+            weight_decay=0.01,
             per_device_train_batch_size=self.__variable.TRAIN_BATCH_SIZE,
             per_device_eval_batch_size=self.__variable.VALIDATE_BATCH_SIZE,
-            weight_decay=0.01,
             num_train_epochs=self.__variable.EPOCHS,
+            max_steps=-1,
+            warmup_steps=0,
+            logging_dir=os.path.join(self.__variable.MODEL_OUTPUT_DIRECTORY, '.logs'),
             save_total_limit=2,
+            skip_memory_metrics=True,
             load_best_model_at_end=True,
             predict_with_generate=True,
             fp16=True,
