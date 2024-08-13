@@ -10,6 +10,9 @@ import src.elements.variable as vr
 
 
 class Settings:
+    """
+    Class Settings
+    """
 
     def __init__(self, variable: vr.Variable):
         """
@@ -30,7 +33,7 @@ class Settings:
 
     def scheduler(self):
         """
-        
+
         :return:
         """
 
