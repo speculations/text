@@ -18,11 +18,10 @@ class Intelligence:
     The model development class.
     """
 
-    def __init__(self, variable: vr.Variable, device: str):
+    def __init__(self, variable: vr.Variable):
         """
 
         :param variable: A set of values for machine learning model development
-        :param device: 'cuda' or 'cpu'
         """
 
         self.__variable = variable
@@ -38,7 +37,7 @@ class Intelligence:
 
         # To graphics processing unit, if available
         self.__model = src.modelling.t5.model.Model(variable=variable).exc()
-        self.__model.to(device)
+        self.__model.to(self.__variable.DEVICE)
 
     def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
         """
