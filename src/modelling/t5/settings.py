@@ -6,13 +6,6 @@ import ray.tune.schedulers as rts
 class Settings:
 
     perturbation_interval = 2
-    lr = 0.1
-
-    tune_by = {
-        'per_device_train_batch_size': 32,
-        'per_device_eval_batch_size': 32,
-        'num_train_epochs': ray.tune.choice([2, 3, 4, 5])
-    }
 
     scheduler = rts.PopulationBasedTraining(
         time_attr='training_iteration',
@@ -28,9 +21,13 @@ class Settings:
         resample_probability=0.25
     )
 
-    param_space = {
-        'learning_rate': 0.05
+    hp_space = {
+        'per_device_train_batch_size': 32,
+        'per_device_eval_batch_size': 32,
+        'num_train_epochs': ray.tune.choice([2, 3, 4, 5])
     }
+
+    
 
 
 
