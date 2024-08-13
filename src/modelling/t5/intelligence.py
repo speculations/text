@@ -37,7 +37,7 @@ class Intelligence:
 
 
         # To graphics processing unit, if available
-        src.modelling.t5.model.Model(variable=variable).exc()
+        self.__model = src.modelling.t5.model.Model(variable=variable).exc()
         self.__model.to(device)
 
     def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
