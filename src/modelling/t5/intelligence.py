@@ -1,16 +1,14 @@
 """Module intelligence.py"""
 import logging
-import os.path
 
 import datasets
 import transformers
 
 import src.elements.variable as vr
 import src.modelling.t5.metrics
-import src.modelling.t5.parameters
-
-import src.modelling.t5.settings
 import src.modelling.t5.model
+import src.modelling.t5.parameters
+import src.modelling.t5.settings
 
 
 class Intelligence:
