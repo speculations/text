@@ -25,12 +25,13 @@ class Steps:
         """
 
         self.__source = source
-        self.__device = device
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
         self.__variable = self.__variable._replace(
-            EPOCHS=2, MODEL_OUTPUT_DIRECTORY=os.path.join(config.Config().warehouse, 't5'))
+            EPOCHS=2,
+            MODEL_OUTPUT_DIRECTORY=os.path.join(config.Config().warehouse, 't5'),
+            DEVICE=device)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -63,7 +64,6 @@ class Steps:
         data = self.__after_tokenization()
 
         # Model
-        intelligence = src.modelling.t5.intelligence.Intelligence(
-            variable=self.__variable, device=self.__device)
+        intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable)
         model: transformers.Seq2SeqTrainer = intelligence(data=data)
         self.__logger.info(dir(model))
