@@ -46,7 +46,7 @@ class Steps:
     def __after_tokenization(self) -> datasets.DatasetDict:
 
         # Preprocessing Instance: For tokenization.
-        preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable)
+        preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable, parameters=self.parameters)
 
         # Converting each split into a T5 tokenized split
         data: datasets.DatasetDict = self.__source.map(preprocessing.exc, batched=True)
@@ -68,6 +68,6 @@ class Steps:
         data = self.__after_tokenization()
 
         # Model
-        intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable)
+        intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable, parameters=self.parameters)
         model: transformers.Seq2SeqTrainer = intelligence(data=data)
         self.__logger.info(dir(model))
