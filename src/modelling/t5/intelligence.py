@@ -14,16 +14,14 @@ class Intelligence:
     The model development class.
     """
 
-    def __init__(self, variable: vr.Variable, device: str, output_directory: str):
+    def __init__(self, variable: vr.Variable, device: str):
         """
 
         :param variable: A set of values for machine learning model development
         :param device: 'cuda' or 'cpu'
-        :param output_directory:
         """
 
         self.__variable = variable
-        self.__output_directory = output_directory
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -66,7 +64,7 @@ class Intelligence:
 
         # Arguments
         return transformers.Seq2SeqTrainingArguments(
-            output_dir=self.__output_directory,
+            output_dir=self.__variable.MODEL_OUTPUT_DIRECTORY,
             eval_strategy='epoch',
             save_strategy='epoch',
             learning_rate=self.__variable.LEARNING_RATE,
