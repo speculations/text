@@ -7,6 +7,7 @@ import transformers
 
 import config
 import src.elements.variable as vr
+import src.modelling.t5.parameters as pr
 import src.modelling.t5.depositories
 import src.modelling.t5.intelligence
 import src.modelling.t5.preprocessing
@@ -32,6 +33,9 @@ class Steps:
             EPOCHS=2,
             MODEL_OUTPUT_DIRECTORY=os.path.join(config.Config().warehouse, 't5'),
             DEVICE=device)
+
+        # Parameters
+        self.parameters = pr.Parameters()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
