@@ -19,7 +19,9 @@ class Intelligence:
     def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
 
-        :param variable: A set of values for machine learning model development
+        :param variable: A suite of values for machine learning
+                         model development
+        :param parameters: T5 specific parameters
         """
 
         self.__variable = variable
