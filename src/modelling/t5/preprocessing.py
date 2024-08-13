@@ -5,7 +5,6 @@ import transformers
 import src.elements.variable as vr
 import src.modelling.t5.parameters as pr
 
-
 class Preprocessing:
     """
     Class Preprocessing
@@ -15,7 +14,7 @@ class Preprocessing:
     architecture expectations.
     """
 
-    def __init__(self, variable: vr.Variable):
+    def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
 
         :param variable: A suite of values for machine learning
@@ -25,7 +24,7 @@ class Preprocessing:
         self.__variable = variable
 
         # The T5 specific parameters, and the T5 specific tokenizer
-        self.__parameters = pr.Parameters()
+        self.__parameters = parameters
         self.__tokenizer: transformers.PreTrainedTokenizerFast = self.__parameters.tokenizer
 
     def exc(self, blob: datasets.formatting.formatting.LazyBatch) -> transformers.BatchEncoding:
