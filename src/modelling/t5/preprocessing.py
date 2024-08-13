@@ -5,6 +5,7 @@ import transformers
 import src.elements.variable as vr
 import src.modelling.t5.parameters as pr
 
+
 class Preprocessing:
     """
     Class Preprocessing
@@ -19,11 +20,12 @@ class Preprocessing:
 
         :param variable: A suite of values for machine learning
                          model development
+        :param parameters: T5 specific parameters
         """
 
         self.__variable = variable
 
-        # The T5 specific parameters, and the T5 specific tokenizer
+        # The T5 specific parameters
         self.__parameters = parameters
         self.__tokenizer: transformers.PreTrainedTokenizerFast = self.__parameters.tokenizer
 
