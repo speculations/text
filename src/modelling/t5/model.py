@@ -8,6 +8,9 @@ import src.modelling.t5.parameters as pr
 
 
 class Model:
+    """
+    Class Model
+    """
 
     def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
