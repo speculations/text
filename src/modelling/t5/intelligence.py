@@ -27,11 +27,9 @@ class Intelligence:
         # Setting: scheduler, arguments, ...
         self.__settings = src.modelling.t5.settings.Settings(variable=variable)
 
-
         # Instances
         self.__metrics = src.modelling.t5.metrics.Metrics()
         self.__parameters = src.modelling.t5.parameters.Parameters()
-
 
         # To graphics processing unit, if available
         self.__model = src.modelling.t5.model.Model(variable=variable).exc()
