@@ -1,3 +1,4 @@
+"""Module model.py"""
 import logging
 
 import transformers
@@ -11,7 +12,9 @@ class Model:
     def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
 
-        :param variable:
+        :param variable: A suite of values for machine learning
+                         model development
+        :param parameters: T5 specific parameters
         """
 
         self.__variable = variable
@@ -24,6 +27,11 @@ class Model:
         self.__logger = logging.getLogger(__name__)
 
     def exc(self) -> transformers.models.t5.modeling_t5.T5ForConditionalGeneration:
+        """
+
+        :return:
+            model
+        """
 
         # Configurations
         config = transformers.GenerationConfig.from_pretrained(
