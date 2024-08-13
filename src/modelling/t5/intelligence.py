@@ -29,9 +29,9 @@ class Intelligence:
         self.__settings = src.modelling.t5.settings.Settings(variable=variable)
 
         # Instances
-        self.__metrics = src.modelling.t5.metrics.Metrics()
+        self.__metrics = src.modelling.t5.metrics.Metrics(parameters=self.__parameters)
 
-        # To graphics processing unit, if available
+        # Pre-trained Model: To graphics processing unit, if available
         self.__model = src.modelling.t5.model.Model(variable=variable, parameters=self.__parameters).exc()
         self.__model.to(self.__variable.DEVICE)
 
