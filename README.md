@@ -18,7 +18,7 @@ on automatic summarisation metrics; both data structuring and architecture relat
 * Aspects of [How to Compute the Probability of a Word](https://arxiv.org/pdf/2406.14561)
 * Aspects of [Understanding Evaluation Metrics for Language Models](https://thegradient.pub/understanding-evaluation-metrics-for-language-models/)
 
-Determine the strengths and weaknesses of each metric, considering the problem in question, i.e., abstractive text summarisation; noting that the characteristics of a language, and its dialects, may impact the appropriateness of a metric.
+
 
 
 <br>
