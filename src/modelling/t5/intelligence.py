@@ -9,6 +9,8 @@ import src.elements.variable as vr
 import src.modelling.t5.metrics
 import src.modelling.t5.parameters
 
+import src.modelling.t5.settings
+
 
 class Intelligence:
     """
@@ -23,6 +25,8 @@ class Intelligence:
         """
 
         self.__variable = variable
+
+        self.__settings = src.modelling.t5.settings.Settings(variable=variable)
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -57,37 +61,11 @@ class Intelligence:
         return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
-    def __args(self) -> transformers.Seq2SeqTrainingArguments:
-        """
 
-        :return:
-        """
-
-        # Arguments
-        return transformers.Seq2SeqTrainingArguments(
-            output_dir=self.__variable.MODEL_OUTPUT_DIRECTORY,
-            do_train=True,
-            do_eval=True,
-            eval_strategy='epoch',
-            save_strategy='epoch',
-            learning_rate=self.__variable.LEARNING_RATE,
-            weight_decay=0.01,
-            per_device_train_batch_size=self.__variable.TRAIN_BATCH_SIZE,
-            per_device_eval_batch_size=self.__variable.VALIDATE_BATCH_SIZE,
-            num_train_epochs=self.__variable.EPOCHS,
-            max_steps=-1,
-            warmup_steps=0,
-            logging_dir=os.path.join(self.__variable.MODEL_OUTPUT_DIRECTORY, '.logs'),
-            save_total_limit=2,
-            skip_memory_metrics=True,
-            load_best_model_at_end=True,
-            predict_with_generate=True,
-            fp16=True,
-            push_to_hub=False
-        )
 
     def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
         """
+        trainer.hyperparameter_search()
 
         :param data: The data; tokenized.
         :return:
@@ -95,15 +73,13 @@ class Intelligence:
 
         trainer = transformers.Seq2SeqTrainer(
             model=self.__model,
-            args=self.__args(),
+            args=self.__settings.args(),
             train_dataset=data['train'],
             eval_dataset=data['validate'],
             tokenizer=self.__parameters.tokenizer,
             data_collator=self.__data_collator(),
             compute_metrics=self.__metrics.exc
         )
-
-        # trainer.hyperparameter_search()
 
         trainer.train()
 
