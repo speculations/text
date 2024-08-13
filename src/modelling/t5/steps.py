@@ -45,7 +45,7 @@ class Steps:
 
         # Converting each split into a T5 tokenized split
         data: datasets.DatasetDict = self.__source.map(preprocessing.exc, batched=True)
-        self.__logger.info(f'{self.__source.keys()}\n{data.keys()}')
+        self.__logger.info('source: %s\ndata: %s', self.__source.keys(), data.keys())
 
         return data
 
