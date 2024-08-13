@@ -7,9 +7,9 @@ import transformers
 
 import config
 import src.elements.variable as vr
-import src.modelling.t5.parameters as pr
 import src.modelling.t5.depositories
 import src.modelling.t5.intelligence
+import src.modelling.t5.parameters as pr
 import src.modelling.t5.preprocessing
 
 
