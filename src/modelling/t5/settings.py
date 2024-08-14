@@ -25,22 +25,31 @@ class Settings:
 
         self.__perturbation_interval = 2
 
-        self.hp_space = {
+    def hp_space(self):
+        """
+        Initialises
+
+        :return:
+        """
+
+        return {
             'per_device_train_batch_size': 32,
-            'per_device_eval_batch_size': 32,
+            'per_device_eval_batch_size': self.__variable.VALIDATE_BATCH_SIZE,
             'num_train_epochs': ray.tune.choice([2, 3, 4, 5])
         }
 
     def scheduler(self):
         """
+        https://docs.ray.io/en/latest/tune/api/doc/ray.tune.schedulers.PopulationBasedTraining.html
+
+        Leads on from hp_space
 
         :return:
         """
 
         return rts.PopulationBasedTraining(
             time_attr='training_iteration',
-            metric='',
-            mode='max',
+            metric='eval_loss', mode='min',
             perturbation_interval=self.__perturbation_interval,
             hyperparam_mutations={
                 'learning_rate': ray.tune.uniform(lower=5e-3, upper=1e-1),
@@ -53,11 +62,11 @@ class Settings:
 
     def args(self) -> transformers.Seq2SeqTrainingArguments:
         """
+        C
 
         :return:
         """
 
-        # Arguments
         return transformers.Seq2SeqTrainingArguments(
             output_dir=self.__variable.MODEL_OUTPUT_DIRECTORY,
             do_train=True,
