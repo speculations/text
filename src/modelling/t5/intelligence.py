@@ -88,5 +88,5 @@ class Intelligence:
         )
 
         logging.info(type(latest))
-        
+
         return latest
