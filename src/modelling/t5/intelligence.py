@@ -1,7 +1,8 @@
 """Module intelligence.py"""
+import logging
+
 import datasets
 import transformers
-import ray.tune
 
 import src.elements.variable as vr
 import src.modelling.t5.metrics
@@ -45,7 +46,7 @@ class Intelligence:
         return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
-    def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
+    def __call__(self, data: datasets.DatasetDict):
         """
         https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainer
 
@@ -63,7 +64,7 @@ class Intelligence:
             compute_metrics=self.__metrics.exc
         )
 
-        trainer.hyperparameter_search(
+        latest = trainer.hyperparameter_search(
             hp_space=lambda _: self.__settings.hp_space(),
             n_trials=9,
             backend='ray',
@@ -76,5 +77,6 @@ class Intelligence:
             log_to_file=True
         )
 
+        logging.info(type(latest))
         
-        return trainer
+        return latest
