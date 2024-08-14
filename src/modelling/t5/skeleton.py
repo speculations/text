@@ -1,4 +1,4 @@
-"""Module model.py"""
+"""Module skeleton.py"""
 import logging
 
 import transformers
@@ -7,7 +7,7 @@ import src.elements.variable as vr
 import src.modelling.t5.parameters as pr
 
 
-class Model:
+class Skeleton:
     """
     Class Model
     """
