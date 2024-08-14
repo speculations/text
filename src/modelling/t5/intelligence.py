@@ -52,7 +52,7 @@ class Intelligence:
         :return:
         """
 
-        trainer = transformers.Seq2SeqTrainer(
+        trainable = transformers.Seq2SeqTrainer(
             model=self.__model,
             args=self.__settings.args(),
             train_dataset=data['train'],
@@ -62,6 +62,6 @@ class Intelligence:
             compute_metrics=self.__metrics.exc
         )
 
-        trainer.train()
+        trainable.train()
 
-        return trainer
+        return trainable
