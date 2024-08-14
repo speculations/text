@@ -46,7 +46,7 @@ class Intelligence:
 
     def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
         """
-        trainer.hyperparameter_search()
+        Switch to ray.tune.Tuner
 
         :param data: The data; tokenized.
         :return:
@@ -60,6 +60,11 @@ class Intelligence:
             tokenizer=self.__parameters.tokenizer,
             data_collator=self.__data_collator(),
             compute_metrics=self.__metrics.exc
+        )
+
+        trainer.hyperparameter_search(
+            hp_space=lambda _: self.__settings.hp_space(),
+            n_trials=5
         )
 
         trainer.train()
