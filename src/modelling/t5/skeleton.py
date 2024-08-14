@@ -29,7 +29,7 @@ class Skeleton:
                             datefmt='%Y-%m-%d %H:%M:%S')
         self.__logger = logging.getLogger(__name__)
 
-    def exc(self) -> transformers.models.t5.modeling_t5.T5ForConditionalGeneration:
+    def exc(self):
         """
 
         :return:
@@ -43,8 +43,8 @@ class Skeleton:
         self.__logger.info('max_new_tokens: %s', config.max_new_tokens)
 
         # Model initialisation
-        model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration
-        model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
-            pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
+        # model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration
+        # model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
+        #     pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
 
-        return model
+        return config
