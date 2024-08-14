@@ -63,7 +63,8 @@ class Settings:
     @staticmethod
     def reporting():
         """
-        
+        https://docs.ray.io/en/latest/tune/api/doc/ray.tune.CLIReporter.html
+
         :return:
         """
 
@@ -74,6 +75,7 @@ class Settings:
 
     def args(self) -> transformers.Seq2SeqTrainingArguments:
         """
+        https://huggingface.co/docs/transformers/v4.44.0/en/main_classes/trainer#transformers.Seq2SeqTrainingArguments
         Opt foci: learning rate, weight decay, the batch sizes, number of training epochs
 
         :return:
