@@ -1,12 +1,13 @@
 """Module intelligence.py"""
 import logging
+import os
 
 import datasets
 import transformers
 
 import src.elements.variable as vr
 import src.modelling.t5.metrics
-import src.modelling.t5.model
+import src.modelling.t5.skeleton
 import src.modelling.t5.parameters as pr
 import src.modelling.t5.settings
 
@@ -33,9 +34,8 @@ class Intelligence:
         # Instances
         self.__metrics = src.modelling.t5.metrics.Metrics(parameters=self.__parameters)
 
-        # Pre-trained Model: To graphics processing unit, if available
-        self.__model = src.modelling.t5.model.Model(variable=variable, parameters=self.__parameters).exc()
-        self.__model.to(self.__variable.DEVICE)
+        # Configuration
+        self.__skeleton = src.modelling.t5.skeleton.Skeleton(variable=variable, parameters=self.__parameters).exc()
 
     def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
         """
@@ -46,6 +46,16 @@ class Intelligence:
         return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
+    def __ml(self):
+        """
+
+        :return:
+        """
+
+        return transformers.AutoModelForSeq2SeqLM.from_pretrained(
+            pretrained_model_name_or_path=self.__parameters.checkpoint, config=self.__skeleton
+        )
+
     def __call__(self, data: datasets.DatasetDict):
         """
         https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainer
@@ -55,7 +65,7 @@ class Intelligence:
         """
 
         trainer = transformers.Seq2SeqTrainer(
-            model=self.__model,
+            model_init=self.__ml,
             args=self.__settings.args(),
             train_dataset=data['train'],
             eval_dataset=data['validate'],
@@ -72,7 +82,7 @@ class Intelligence:
             keep_checkpoints_num=1,
             checkpoint_score_attr='training_iteration',
             progress_reporter=self.__settings.reporting(),
-            local_dir='',
+            storage_path=os.path.join(self.__variable.MODEL_OUTPUT_DIRECTORY, 'numerics'),
             name='robust',
             log_to_file=True
         )
