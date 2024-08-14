@@ -33,8 +33,8 @@ class Settings:
         """
 
         return {
-            'per_device_train_batch_size': 32,
-            'per_device_eval_batch_size': self.__variable.VALIDATE_BATCH_SIZE,
+            'per_device_train_batch_size': 2*self.__variable.TRAIN_BATCH_SIZE,
+            'per_device_eval_batch_size': 2*self.__variable.VALIDATE_BATCH_SIZE,
             'num_train_epochs': ray.tune.choice([2, 3, 4, 5])
         }
 
@@ -62,7 +62,7 @@ class Settings:
 
     def args(self) -> transformers.Seq2SeqTrainingArguments:
         """
-        C
+        Opt foci:
 
         :return:
         """
