@@ -95,6 +95,8 @@ class Settings:
             max_steps=-1,
             warmup_steps=0,
             logging_dir=os.path.join(self.__variable.MODEL_OUTPUT_DIRECTORY, '.logs'),
+            no_cuda=False,
+            seed=5,
             save_total_limit=2,
             skip_memory_metrics=True,
             load_best_model_at_end=True,
