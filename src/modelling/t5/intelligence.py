@@ -62,11 +62,6 @@ class Intelligence:
             compute_metrics=self.__metrics.exc
         )
 
-        trainer.hyperparameter_search(
-            hp_space=lambda _: self.__settings.hp_space(),
-            n_trials=5
-        )
-
         trainer.train()
 
         return trainer
