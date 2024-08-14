@@ -25,7 +25,7 @@ class Settings:
 
         self.__perturbation_interval = 2
 
-    def hp_space(self):
+    def param_space(self):
         """
         Initialises
 
