@@ -3,7 +3,6 @@ import logging
 import os
 
 import datasets
-import transformers
 
 import config
 import src.elements.variable as vr
@@ -57,5 +56,5 @@ class Steps:
 
         # Model
         intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable, parameters=self.parameters)
-        model: transformers.Seq2SeqTrainer = intelligence(data=data)
+        model = intelligence(data=data)
         self.__logger.info(dir(model))
