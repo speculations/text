@@ -1,6 +1,7 @@
 """Module intelligence.py"""
 import datasets
 import transformers
+import ray.tune
 
 import src.elements.variable as vr
 import src.modelling.t5.metrics
@@ -52,7 +53,7 @@ class Intelligence:
         :return:
         """
 
-        trainable = transformers.Seq2SeqTrainer(
+        trainer = transformers.Seq2SeqTrainer(
             model=self.__model,
             args=self.__settings.args(),
             train_dataset=data['train'],
@@ -62,6 +63,18 @@ class Intelligence:
             compute_metrics=self.__metrics.exc
         )
 
-        trainable.train()
+        trainer.hyperparameter_search(
+            hp_space=lambda _: self.__settings.hp_space(),
+            n_trials=9,
+            backend='ray',
+            scheduler=self.__settings.scheduler(),
+            keep_checkpoints_num=1,
+            checkpoint_score_attr='training_iteration',
+            progress_reporter=self.__settings.reporting(),
+            local_dir='',
+            name='robust',
+            log_to_file=True
+        )
 
-        return trainable
+        
+        return trainer
