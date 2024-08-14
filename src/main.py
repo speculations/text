@@ -47,6 +47,10 @@ if __name__ == '__main__':
                         format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
                         datefmt='%Y-%m-%d %H:%M:%S')
 
+    # Activate graphics processing units
+    os.environ['CUDA_VISIBLE_DEVICES']='0'
+    os.environ['TOKENIZERS_PARALLELISM']='true'
+
     # Modules
     import src.functions.cache
     import src.data.source
