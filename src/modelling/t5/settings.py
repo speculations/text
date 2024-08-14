@@ -23,6 +23,7 @@ class Settings:
 
         self.__variable = variable
 
+        # Re-visit
         self.__perturbation_interval = 2
 
     def hp_space(self):
