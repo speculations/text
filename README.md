@@ -26,10 +26,12 @@ These warning messages will be addressed:
 
 ## References
 
-Example:
+Articles:
 
 * [T5: Text-To-Text Transfer Transformer](https://huggingface.co/docs/transformers/tasks/summarization); [T5](https://huggingface.co/google-t5).
 * [Population Based Training](https://deepmind.google/discover/blog/population-based-training-of-neural-networks/), ([paper](https://arxiv.org/abs/1711.09846))
+
+<br>
 
 Critical Classes & Utilities:
 
@@ -46,6 +48,29 @@ Critical Classes & Utilities:
   * [metrics & batch_decode](https://huggingface.co/docs/transformers/main_classes/tokenizer#transformers.PreTrainedTokenizer.batch_decode)
   * [rouge](https://huggingface.co/spaces/evaluate-metric/rouge)
   * [Utilities for Trainer: EvalPrediction](https://huggingface.co/docs/transformers/v4.42.0/en/internal/trainer_utils#transformers.EvalPrediction)
+  * [Evaluate](https://huggingface.co/docs/evaluate/index).  [An old approach; glue_metric_compute.](https://colab.research.google.com/github/huggingface/blog/blob/master/notebooks/trainer/01_text_classification.ipynb)
+
+<br>
+
+Hyperparameters
+
+* [Trainer](https://huggingface.co/docs/transformers/main_classes/trainer)
+* [Using Huggingface Transformers with Tune](https://docs.ray.io/en/latest/tune/examples/pbt_transformers.html)
+  * [Configure PBT and Tuner](https://docs.ray.io/en/latest/tune/examples/pbt_visualization/pbt_visualization.html?_gl=1*13cvafe*_ga*MTY2MzU4MzU2OC4xNzIzNjU3NDI2*_up*MQ..*_ga_0LCWHW1N3S*MTcyMzY1NzQyNi4xLjAuMTcyMzY1NzQyNi4wLjAuMA..#configure-pbt-and-tuner)
+  * [ray.tune.schedulers.PopulationBasedTraining](https://docs.ray.io/en/latest/tune/api/doc/ray.tune.schedulers.PopulationBasedTraining.html), [schedulers](https://docs.ray.io/en/latest/tune/api/schedulers.html)
+  * [ray.tune.Tuner](https://docs.ray.io/en/latest/tune/api/doc/ray.tune.Tuner.html)
+  * [tune_basic_example](https://docs.ray.io/en/latest/tune/examples/includes/tune_basic_example.html)
+* [Logging and Outputs in Tune](https://docs.ray.io/en/latest/tune/tutorials/tune-output.html)
+  * And, using TensorBoard
+* Pytorch
+  * [TensorboardX](https://tensorboardx.readthedocs.io/en/latest/tutorial.html#what-is-tensorboard-x)
+
+<br>
+
+System
+
+* [Ray Dashboard](https://docs.ray.io/en/latest/ray-observability/getting-started.html)
+* [Ray, Grafana, Prometheus](https://docs.ray.io/en/latest/cluster/configure-manage-dashboard.html#embed-grafana-visualizations-into-ray-dashboard)
 
 <br>
 <br>
