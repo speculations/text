@@ -46,7 +46,7 @@ class Intelligence:
 
     def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
         """
-        Switch to ray.tune.Tuner
+        https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainer
 
         :param data: The data; tokenized.
         :return:
