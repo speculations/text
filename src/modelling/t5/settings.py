@@ -60,9 +60,21 @@ class Settings:
             resample_probability=0.25
         )
 
+    @staticmethod
+    def reporting():
+        """
+        
+        :return:
+        """
+
+        return ray.tune.CLIReporter(
+            parameter_columns=['learning_rate', 'weight_decay', 'per_device_training_batch_size', 'num_train_epochs'],
+            metric_columns=['eval_loss', 'rouge1', 'rouge2', 'rougeLsum', 'median']
+        )
+
     def args(self) -> transformers.Seq2SeqTrainingArguments:
         """
-        Opt foci:
+        Opt foci: learning rate, weight decay, the batch sizes, number of training epochs
 
         :return:
         """
