@@ -1,6 +1,8 @@
 transformers
 accelerate>=0.31
 ray[data,train,tune,serve]
+optuna
+optuna-dashboard
 dask[complete]>=2024
 seqeval[gpu]
 datasets
