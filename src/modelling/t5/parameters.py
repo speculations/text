@@ -1,21 +1,18 @@
 """Module parameters.py"""
+import typing
+
 import transformers
 
 
-class Parameters:
+class Parameters(typing.NamedTuple):
     """
     Class: Parameters
 
+    Crazy?
     For setting terms that are particular to a pre-trained model architecture type
     """
 
-    def __init__(self):
-        """
-        Constructor
-        """
-
-        self.input_prefix = 'summarize: '
-
-        self.checkpoint = 'google-t5/t5-small'
-        self.tokenizer: transformers.PreTrainedTokenizerFast = (
-            transformers.AutoTokenizer.from_pretrained(pretrained_model_name_or_path=self.checkpoint))
+    input_prefix: str = 'summarize: '
+    checkpoint: str = 'google-t5/t5-small'
+    tokenizer: transformers.PreTrainedTokenizerFast = (
+        transformers.AutoTokenizer.from_pretrained(pretrained_model_name_or_path=checkpoint))

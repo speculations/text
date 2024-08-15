@@ -34,6 +34,12 @@ class Variable(typing.NamedTuple):
     MAX_LENGTH_TARGET: int
         The maximum sequence length of the dependent/target variable.  In the case of the California Bills data,
         the <summary> key represents the independent variable.
+
+    MODEL_OUTPUT_DIRECTORY: str
+        A directory for model outputs
+
+    DEVICE: str
+        A string denoting graphics or central processing unit, i.e., 'cuda' or 'cpu', respectively.
     """
 
     TRAIN_BATCH_SIZE: int = 16
@@ -44,3 +50,5 @@ class Variable(typing.NamedTuple):
     MAX_NEW_TOKENS: int = 32
     MAX_LENGTH_INPUT: int = 1024
     MAX_LENGTH_TARGET: int = 32
+    MODEL_OUTPUT_DIRECTORY: str = ''
+    DEVICE: str = ''

@@ -1,12 +1,15 @@
 """Module intelligence.py"""
 import logging
+import os
 
 import datasets
 import transformers
 
 import src.elements.variable as vr
 import src.modelling.t5.metrics
-import src.modelling.t5.parameters
+import src.modelling.t5.skeleton
+import src.modelling.t5.parameters as pr
+import src.modelling.t5.settings
 
 
 class Intelligence:
@@ -14,40 +17,25 @@ class Intelligence:
     The model development class.
     """
 
-    def __init__(self, variable: vr.Variable, device: str, output_directory: str):
+    def __init__(self, variable: vr.Variable, parameters: pr.Parameters):
         """
 
-        :param variable: A set of values for machine learning model development
-        :param device: 'cuda' or 'cpu'
-        :param output_directory:
+        :param variable: A suite of values for machine learning
+                         model development
+        :param parameters: T5 specific parameters
         """
 
         self.__variable = variable
-        self.__output_directory = output_directory
+        self.__parameters = parameters
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
+        # Setting: scheduler, arguments, ...
+        self.__settings = src.modelling.t5.settings.Settings(variable=variable)
 
         # Instances
-        self.__metrics = src.modelling.t5.metrics.Metrics()
-        self.__parameters = src.modelling.t5.parameters.Parameters()
+        self.__metrics = src.modelling.t5.metrics.Metrics(parameters=self.__parameters)
 
-        # Configurations
-        config = transformers.GenerationConfig.from_pretrained(
-            pretrained_model_name=self.__parameters.checkpoint, **{'max_new_tokens': self.__variable.MAX_NEW_TOKENS})
-        self.__logger.info('max_length: %s', config.max_length)
-        self.__logger.info('max_new_tokens: %s', config.max_new_tokens)
-
-        # Model initialisation
-        self.__model: transformers.models.t5.modeling_t5.T5ForConditionalGeneration
-        self.__model = transformers.AutoModelForSeq2SeqLM.from_pretrained(
-            pretrained_model_name_or_path=self.__parameters.checkpoint, config=config)
-
-        # To graphics processing unit, if available
-        self.__model.to(device)
+        # Configuration
+        self.__skeleton = src.modelling.t5.skeleton.Skeleton(variable=variable, parameters=self.__parameters).exc()
 
     def __data_collator(self) -> transformers.DataCollatorForSeq2Seq:
         """
@@ -58,39 +46,27 @@ class Intelligence:
         return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
-    def __args(self) -> transformers.Seq2SeqTrainingArguments:
+    def __ml(self):
         """
 
         :return:
         """
 
-        # Arguments
-        return transformers.Seq2SeqTrainingArguments(
-            output_dir=self.__output_directory,
-            eval_strategy='epoch',
-            save_strategy='epoch',
-            learning_rate=self.__variable.LEARNING_RATE,
-            per_device_train_batch_size=self.__variable.TRAIN_BATCH_SIZE,
-            per_device_eval_batch_size=self.__variable.VALIDATE_BATCH_SIZE,
-            weight_decay=0.01,
-            num_train_epochs=self.__variable.EPOCHS,
-            save_total_limit=2,
-            load_best_model_at_end=True,
-            predict_with_generate=True,
-            fp16=True,
-            push_to_hub=False
+        return transformers.AutoModelForSeq2SeqLM.from_pretrained(
+            pretrained_model_name_or_path=self.__parameters.checkpoint, config=self.__skeleton
         )
 
-    def __call__(self, data: datasets.DatasetDict) -> transformers.Seq2SeqTrainer:
+    def __call__(self, data: datasets.DatasetDict):
         """
+        https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainer
 
         :param data: The data; tokenized.
         :return:
         """
 
         trainer = transformers.Seq2SeqTrainer(
-            model=self.__model,
-            args=self.__args(),
+            model_init=self.__ml,
+            args=self.__settings.args(),
             train_dataset=data['train'],
             eval_dataset=data['validate'],
             tokenizer=self.__parameters.tokenizer,
@@ -98,6 +74,19 @@ class Intelligence:
             compute_metrics=self.__metrics.exc
         )
 
-        trainer.train()
+        latest = trainer.hyperparameter_search(
+            hp_space=lambda _: self.__settings.hp_space(),
+            n_trials=9,
+            backend='ray',
+            scheduler=self.__settings.scheduler(),
+            keep_checkpoints_num=1,
+            checkpoint_score_attr='training_iteration',
+            progress_reporter=self.__settings.reporting(),
+            storage_path=os.path.join(self.__variable.MODEL_OUTPUT_DIRECTORY, 'numerics'),
+            name='robust',
+            log_to_file=True
+        )
 
-        return trainer
+        logging.info(type(latest))
+
+        return latest

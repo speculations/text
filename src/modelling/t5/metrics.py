@@ -4,7 +4,7 @@ import logging
 import evaluate
 import numpy as np
 
-import src.modelling.t5.parameters
+import src.modelling.t5.parameters as pr
 
 
 class Metrics:
@@ -13,13 +13,13 @@ class Metrics:
     transformers.Seq2SeqTrainer
     """
 
-    def __init__(self):
-        """
-        Constructor
+    def __init__(self, parameters: pr.Parameters):
         """
 
-        self.__parameters = src.modelling.t5.parameters.Parameters()
-        self.__tokenizer = self.__parameters.tokenizer
+        :param parameters: T5 specific parameters
+        """
+
+        self.__tokenizer = parameters.tokenizer
 
         # ROUGE
         self.__rouge = evaluate.load('rouge')

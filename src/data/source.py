@@ -42,12 +42,13 @@ class Source:
         splits: datasets.DatasetDict = self.__dataset['test'].train_test_split(
             test_size=self.__configurations.fraction_validate)
 
-        nodes: datasets.DatasetDict = splits['test'].train_test_split(test_size=0.25)
+        parts: datasets.DatasetDict = splits['test'].train_test_split(
+            test_size=self.__configurations.fraction_test)
 
         splittings: datasets.DatasetDict = datasets.DatasetDict({
             'train': splits['train'],
-            'validate': nodes['train'],
-            'test': nodes['test']
+            'validate': parts['train'],
+            'test': parts['test']
         })
 
         return splittings
@@ -58,18 +59,12 @@ class Source:
         :return:
         """
 
-        # The data segments
-        self.__logger.info('The data segments:\n%s', self.__dataset.keys())
-        self.__logger.info('Training Set:\n%s', self.__dataset['train'].shape)
-        self.__logger.info('Validate Set:\n%s', self.__dataset['validate'].shape)
-        self.__logger.info('Test Set:\n%s', self.__dataset['test'].shape)
-
         # The initial focus
         temporary: datasets.DatasetDict = self.__temporary()
         self.__logger.info('Initially focusing on a small data segment\n%s\n%s', type(temporary), temporary.keys())
-        self.__logger.info('Training:\n%s', temporary['train'].shape)
-        self.__logger.info('Validating:\n%s', temporary['validate'].shape)
-        self.__logger.info('Testing:\n%s', temporary['test'].shape)
+        self.__logger.info('train:\n%s', temporary['train'].shape)
+        self.__logger.info('validate:\n%s', temporary['validate'].shape)
+        self.__logger.info('test:\n%s', temporary['test'].shape)
 
         self.__logger.info('The parts of a data record:\n%s', temporary['train'][0].keys())
 

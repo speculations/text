@@ -1,4 +1,5 @@
 """Module config.py"""
+import os
 
 
 class Config:
@@ -10,6 +11,9 @@ class Config:
         """
         Constructor
         """
+
+        # Warehouse
+        self.warehouse = os.path.join(os.getcwd(), 'warehouse')
 
         # For reproducibility purposes
         self.seed = 5

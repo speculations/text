@@ -3,11 +3,12 @@ import logging
 import os
 
 import datasets
-import transformers
 
+import config
 import src.elements.variable as vr
 import src.modelling.t5.depositories
 import src.modelling.t5.intelligence
+import src.modelling.t5.parameters as pr
 import src.modelling.t5.preprocessing
 
 
@@ -20,18 +21,18 @@ class Steps:
         """
 
         :param source: A dictionary of data splits; training, validation, etc., splits.
-        :param device:
+        :param device: A string denoting graphics or central processing unit, i.e., 'cuda' or 'cpu', respectively.
         """
 
         self.__source = source
-        self.__device = device
 
         # A set of values for machine learning model development
         self.__variable = vr.Variable()
-        self.__variable = self.__variable._replace(EPOCHS=2)
+        self.__variable = self.__variable._replace(MODEL_OUTPUT_DIRECTORY=os.path.join(config.Config().warehouse, 't5'),
+            DEVICE=device, EPOCHS=2)
 
-        # Preprocessing Instance: For tokenization.
-        self.__preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable)
+        # Parameters
+        self.parameters = pr.Parameters()
 
         # Logging
         logging.basicConfig(level=logging.INFO,
@@ -47,16 +48,13 @@ class Steps:
         """
 
         # Re-write
-        output_directory = os.path.join('warehouse', 't5')
-        src.modelling.t5.depositories.Depositories().exc(path=output_directory)
+        src.modelling.t5.depositories.Depositories().exc(path=self.__variable.MODEL_OUTPUT_DIRECTORY)
 
-        # Converting each split into a T5 tokenized split
-        data: datasets.DatasetDict = self.__source.map(self.__preprocessing.exc, batched=True)
-        self.__logger.info(self.__source.keys())
-        self.__logger.info(data.keys())
+        # Preprocessing Instance: For tokenization.  Converting each split into a T5 tokenized split
+        preprocessing = src.modelling.t5.preprocessing.Preprocessing(variable=self.__variable, parameters=self.parameters)
+        data: datasets.DatasetDict = self.__source.map(preprocessing.exc, batched=True)
 
         # Model
-        intelligence = src.modelling.t5.intelligence.Intelligence(
-            variable=self.__variable, device=self.__device, output_directory=output_directory)
-        model: transformers.Seq2SeqTrainer = intelligence(data=data)
+        intelligence = src.modelling.t5.intelligence.Intelligence(variable=self.__variable, parameters=self.parameters)
+        model = intelligence(data=data)
         self.__logger.info(dir(model))

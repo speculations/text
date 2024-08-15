@@ -21,13 +21,13 @@ class Interface:
 
     def exc(self):
         """
-        Design I (Under Development)
-        ----------------------------
+        Design I
+        --------
 
         A container/instance of an image of this repository package will expect a string argument.  The
         argument will determine the model development activity that the instance will focus on.
 
-        This method, i.e., exc(), will receive string argument.  Let the argument's name be
+        This method, i.e., exc(), will receive a string argument.  Let the argument's name be
         architecture, then
 
         match architecture:
