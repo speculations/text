@@ -16,3 +16,6 @@ class Parameters(typing.NamedTuple):
     checkpoint: str = 'google-t5/t5-small'
     tokenizer: transformers.PreTrainedTokenizerFast = (
         transformers.AutoTokenizer.from_pretrained(pretrained_model_name_or_path=checkpoint))
+    n_trials: int = 5
+    n_cpu: int = 8
+    n_gpu: int = 1
