@@ -46,7 +46,7 @@ class Intelligence:
         return transformers.DataCollatorForSeq2Seq(
             tokenizer=self.__parameters.tokenizer, model=self.__parameters.checkpoint)
 
-    def __ml(self):
+    def __model(self):
         """
 
         :return:
@@ -65,7 +65,7 @@ class Intelligence:
         """
 
         trainer = transformers.Seq2SeqTrainer(
-            model_init=self.__ml,
+            model_init=self.__model,
             args=self.__settings.args(),
             train_dataset=data['train'],
             eval_dataset=data['validate'],
@@ -76,7 +76,8 @@ class Intelligence:
 
         latest = trainer.hyperparameter_search(
             hp_space=lambda _: self.__settings.hp_space(),
-            n_trials=9,
+            n_trials=self.__parameters.n_trials,
+            resources_per_trial={'cpu': self.__parameters.n_cpu, 'gpu': self.__parameters.n_gpu},
             backend='ray',
             scheduler=self.__settings.scheduler(),
             keep_checkpoints_num=1,
