@@ -61,6 +61,7 @@ Hyperparameters
   * [ray.tune.Tuner](https://docs.ray.io/en/latest/tune/api/doc/ray.tune.Tuner.html)
   * [tune_basic_example](https://docs.ray.io/en/latest/tune/examples/includes/tune_basic_example.html)
   * [A Guide To Parallelism and Resources for Ray Tune](https://docs.ray.io/en/latest/tune/tutorials/tune-resources.html)
+  * [Get Started with Distributed Training using Hugging Face Transformers](https://docs.ray.io/en/latest/train/getting-started-transformers.html)
 * [Logging and Outputs in Tune](https://docs.ray.io/en/latest/tune/tutorials/tune-output.html)
   * And, using TensorBoard
 * Pytorch
